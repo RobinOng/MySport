@@ -6,6 +6,7 @@
     </head>
     <body>
         <div class="tournamentName">Malaysia Open 2016</div>
+        <p id="notificationTest"></p>
         <div class="team">
             <p class="teamName" id="teamAlfa">Team Alfa</p>
             <div class="player">
@@ -13,8 +14,11 @@
                 <p class="teamPlayer" id="playerBravo">Player Bravo</p>
             </div>
             <div class="score">
-                <p class="teamScore" id="scoreAlfa">0</p>
+                <p class="teamScore" id="scoreAlfa_gameOne">0</p>
+                <p class="teamScore" id="scoreAlfa_gameTwo"></p>
+                <p class="teamScore" id="scoreAlfa_gameThree"></p>
             </div>
+            <button type="button" id="buttonAddScoreAlfa" onclick="scoringSystem()">+</button>
         </div>
         <div class="team">
             <p class="teamName" id="teamZulu">Team Zulu</p>
@@ -23,8 +27,116 @@
                 <p class="teamPlayer" id="playerYankee">Player Yankee</p>
             </div>
             <div class="score">
-                <p class="teamScore" id="scoreZulu">0</p>
+                <p class="teamScore" id="scoreZulu_gameOne">0</p>
+                <p class="teamScore" id="scoreZulu_gameTwo"></p>
+                <p class="teamScore" id="scoreZulu_gameThree"></p>
             </div>
+            <button type="button" id="buttonAddScoreZulu" onclick="scoringSystem()">+</button>
         </div>
     </body>
+    <script>
+        function scoringSystem(){
+            var scoreAlfa = 0;
+            var scoreZulu = 0;
+            var game = 1;
+            var gameAlfa = 0;
+            var gameZulu = 0;
+
+            document.getElementById("buttonAddScoreAlfa").onclick = function(){
+                scoreAlfa++;
+
+                if (scoreAlfa <= 21){
+                    switch (game){
+                        case 1:
+                            document.getElementById("scoreAlfa_gameOne").innerHTML = scoreAlfa.toString();
+                            break;
+                        case 2:
+                            document.getElementById("scoreAlfa_gameTwo").innerHTML = scoreAlfa.toString();
+                            break;
+                        case 3:
+                            document.getElementById("scoreAlfa_gameThree").innerHTML = scoreAlfa.toString();
+                            break;
+                        default:
+                            alert("Something is wrong with buttonAddScoreAlfa");
+                    }
+                }
+
+                if (scoreAlfa == 21) {
+                    game++;
+                    gameAlfa++;
+                    scoreAlfa = 0;
+                    scoreZulu = 0;
+                    switch (game){
+                        case 2:
+                            document.getElementById("notificationTest").innerHTML ="Game 1 won by Team Alfa";
+                            document.getElementById("scoreAlfa_gameTwo").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZulu.toString();
+                            break;
+                        case 3:
+                            if (gameAlfa == 1 && gameZulu == 1){
+                                document.getElementById("notificationTest").innerHTML ="Game 2 won by Team Alfa";
+                                document.getElementById("scoreAlfa_gameThree").innerHTML = scoreAlfa.toString();
+                                document.getElementById("scoreZulu_gameThree").innerHTML = scoreZulu.toString();
+                            }else{
+                                document.getElementById("notificationTest").innerHTML ="Match won by Team Alfa";
+                            }
+                            break;
+                        case 4:
+                            document.getElementById("notificationTest").innerHTML ="Match won by Team Alfa";
+                            break;
+                        default:
+                            alert("Something is wrong with buttonAddScoreAlfa");
+                    }
+                }
+            }
+
+            document.getElementById("buttonAddScoreZulu").onclick = function(){
+                scoreZulu++;
+
+                if (scoreZulu <= 21){
+                    switch (game){
+                        case 1:
+                            document.getElementById("scoreZulu_gameOne").innerHTML = scoreZulu.toString();
+                            break;
+                        case 2:
+                            document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZulu.toString();
+                            break;
+                        case 3:
+                            document.getElementById("scoreZulu_gameThree").innerHTML = scoreZulu.toString();
+                            break;
+                        default:
+                            alert("Something is wrong with buttonAddScoreZulu");
+                    }
+                }
+
+                if (scoreZulu == 21) {
+                    game++;
+                    gameZulu++;
+                    scoreAlfa = 0;
+                    scoreZulu = 0;
+                    switch (game){
+                        case 2:
+                            alert("Game 1 won by Team Zulu");
+                            document.getElementById("scoreAlfa_gameTwo").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZulu.toString();
+                            break;
+                        case 3:
+                            if (gameAlfa == 1 && gameZulu == 1){
+                                document.getElementById("notificationTest").innerHTML ="Game 2 won by Team Zulu";
+                                document.getElementById("scoreAlfa_gameThree").innerHTML = scoreAlfa.toString();
+                                document.getElementById("scoreZulu_gameThree").innerHTML = scoreZulu.toString();
+                            }else{
+                                document.getElementById("notificationTest").innerHTML ="Match won by Team Zulu";
+                            }
+                            break;
+                        case 4:
+                            document.getElementById("notificationTest").innerHTML ="Match won by Team Zulu";
+                            break;
+                        default:
+                            document.getElementById("notificationTest").innerHTML ="Something is wrong with buttonAddScoreZulu";
+                    }
+                }
+            }
+        }
+    </script>
 </html>
