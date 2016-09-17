@@ -6,7 +6,6 @@
     </head>
     <body>
         <div class="tournamentName">Malaysia Open 2016</div>
-        <p id="notificationTest"></p>
         <div class="team">
             <p class="teamName" id="teamAlfa">Team Alfa</p>
             <div class="player">
@@ -32,15 +31,30 @@
                 <p class="teamScore" id="scoreZulu_gameThree"></p>
             </div>
             <button type="button" id="buttonAddScoreZulu" onclick="scoringSystem()">+</button>
+            <button type="button" id="buttonUndo">Undo</button>
         </div>
+        <p id="notificationTest"></p>
+        <p id="test1"></p>
+        <p id="test2"></p>
+        <p id="test3"></p>
+        <p id="test4"></p>
+        <p id="test5"></p>
+        <p id="test6"></p>
     </body>
     <script>
+        window.onload=scoringSystem();
         function scoringSystem(){
             var scoreAlfa = 0;
             var scoreZulu = 0;
             var game = 1;
             var gameAlfa = 0;
             var gameZulu = 0;
+            var scoreAlfaArray_gameOne = ["0"];
+            var scoreZuluArray_gameOne = ["0"];
+            var scoreAlfaArray_gameTwo = ["0"];
+            var scoreZuluArray_gameTwo = ["0"];
+            var scoreAlfaArray_gameThree = ["0"];
+            var scoreZuluArray_gameThree = ["0"];
 
             document.getElementById("buttonAddScoreAlfa").onclick = function(){
                 scoreAlfa++;
@@ -48,13 +62,25 @@
                 if (scoreAlfa <= 21){
                     switch (game){
                         case 1:
+                            scoreAlfaArray_gameOne.push(scoreAlfa.toString());
+                            scoreZuluArray_gameOne.push(scoreZulu.toString());
                             document.getElementById("scoreAlfa_gameOne").innerHTML = scoreAlfa.toString();
+                            document.getElementById("test1").innerHTML = scoreAlfaArray_gameOne;
+                            document.getElementById("test2").innerHTML = scoreZuluArray_gameOne;
                             break;
                         case 2:
+                            scoreAlfaArray_gameTwo.push(scoreAlfa.toString());
+                            scoreZuluArray_gameTwo.push(scoreZulu.toString());
                             document.getElementById("scoreAlfa_gameTwo").innerHTML = scoreAlfa.toString();
+                            document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
+                            document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
                             break;
                         case 3:
+                            scoreAlfaArray_gameThree.push(scoreAlfa.toString());
+                            scoreZuluArray_gameThree.push(scoreZulu.toString());
                             document.getElementById("scoreAlfa_gameThree").innerHTML = scoreAlfa.toString();
+                            document.getElementById("test5").innerHTML = scoreAlfaArray_gameThree;
+                            document.getElementById("test6").innerHTML = scoreZuluArray_gameThree;
                             break;
                         default:
                             alert("Something is wrong with buttonAddScoreAlfa");
@@ -71,12 +97,16 @@
                             document.getElementById("notificationTest").innerHTML ="Game 1 won by Team Alfa";
                             document.getElementById("scoreAlfa_gameTwo").innerHTML = scoreAlfa.toString();
                             document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZulu.toString();
+                            document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
+                            document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
                             break;
                         case 3:
                             if (gameAlfa == 1 && gameZulu == 1){
                                 document.getElementById("notificationTest").innerHTML ="Game 2 won by Team Alfa";
                                 document.getElementById("scoreAlfa_gameThree").innerHTML = scoreAlfa.toString();
                                 document.getElementById("scoreZulu_gameThree").innerHTML = scoreZulu.toString();
+                                document.getElementById("test5").innerHTML = scoreAlfaArray_gameThree;
+                                document.getElementById("test6").innerHTML = scoreZuluArray_gameThree;
                             }else{
                                 document.getElementById("notificationTest").innerHTML ="Match won by Team Alfa";
                             }
@@ -96,13 +126,25 @@
                 if (scoreZulu <= 21){
                     switch (game){
                         case 1:
+                            scoreAlfaArray_gameOne.push(scoreAlfa.toString());
+                            scoreZuluArray_gameOne.push(scoreZulu.toString());
                             document.getElementById("scoreZulu_gameOne").innerHTML = scoreZulu.toString();
+                            document.getElementById("test1").innerHTML = scoreAlfaArray_gameOne;
+                            document.getElementById("test2").innerHTML = scoreZuluArray_gameOne;
                             break;
                         case 2:
+                            scoreAlfaArray_gameTwo.push(scoreAlfa.toString());
+                            scoreZuluArray_gameTwo.push(scoreZulu.toString());
                             document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZulu.toString();
+                            document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
+                            document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
                             break;
                         case 3:
+                            scoreAlfaArray_gameThree.push(scoreAlfa.toString());
+                            scoreZuluArray_gameThree.push(scoreZulu.toString());
                             document.getElementById("scoreZulu_gameThree").innerHTML = scoreZulu.toString();
+                            document.getElementById("test5").innerHTML = scoreAlfaArray_gameThree;
+                            document.getElementById("test6").innerHTML = scoreZuluArray_gameThree;
                             break;
                         default:
                             alert("Something is wrong with buttonAddScoreZulu");
@@ -116,15 +158,19 @@
                     scoreZulu = 0;
                     switch (game){
                         case 2:
-                            alert("Game 1 won by Team Zulu");
+                            document.getElementById("notificationTest").innerHTML ="Game 1 won by Team Zulu";
                             document.getElementById("scoreAlfa_gameTwo").innerHTML = scoreAlfa.toString();
                             document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZulu.toString();
+                            document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
+                            document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
                             break;
                         case 3:
                             if (gameAlfa == 1 && gameZulu == 1){
                                 document.getElementById("notificationTest").innerHTML ="Game 2 won by Team Zulu";
                                 document.getElementById("scoreAlfa_gameThree").innerHTML = scoreAlfa.toString();
                                 document.getElementById("scoreZulu_gameThree").innerHTML = scoreZulu.toString();
+                                document.getElementById("test5").innerHTML = scoreAlfaArray_gameThree;
+                                document.getElementById("test6").innerHTML = scoreZuluArray_gameThree;
                             }else{
                                 document.getElementById("notificationTest").innerHTML ="Match won by Team Zulu";
                             }
@@ -133,9 +179,91 @@
                             document.getElementById("notificationTest").innerHTML ="Match won by Team Zulu";
                             break;
                         default:
-                            document.getElementById("notificationTest").innerHTML ="Something is wrong with buttonAddScoreZulu";
+                            alert("Something is wrong with buttonAddScoreZulu");
                     }
                 }
+            }
+            document.getElementById("buttonUndo").onclick = function(){
+                switch (game){
+                    case 1:
+                        if (scoreAlfaArray_gameOne[scoreAlfaArray_gameOne.length-1]==0 && scoreZuluArray_gameOne[scoreZuluArray_gameOne.length-1]==0){
+                            alert("Unable to undo");
+                            break;
+                        }else{
+                            scoreAlfaArray_gameOne.pop();
+                            scoreZuluArray_gameOne.pop();
+                            scoreAlfa = scoreAlfaArray_gameOne[scoreAlfaArray_gameOne.length - 1];
+                            scoreZulu = scoreZuluArray_gameOne[scoreZuluArray_gameOne.length - 1];
+                            document.getElementById("scoreAlfa_gameOne").innerHTML = scoreAlfaArray_gameOne[scoreAlfaArray_gameOne.length - 1];
+                            document.getElementById("scoreZulu_gameOne").innerHTML = scoreZuluArray_gameOne[scoreZuluArray_gameOne.length - 1];
+                            document.getElementById("test1").innerHTML = scoreAlfaArray_gameOne;
+                            document.getElementById("test2").innerHTML = scoreZuluArray_gameOne;
+                            break;
+                        }
+                    case 2:
+                        if (scoreAlfaArray_gameTwo[scoreAlfaArray_gameTwo.length-1]==0 && scoreZuluArray_gameTwo[scoreZuluArray_gameTwo.length-1]==0){
+                            game--;
+                            scoreAlfaArray_gameOne.pop();
+                            scoreZuluArray_gameOne.pop();
+                            scoreAlfa = scoreAlfaArray_gameOne[scoreAlfaArray_gameOne.length - 1];
+                            scoreZulu = scoreZuluArray_gameOne[scoreZuluArray_gameOne.length - 1];
+                            document.getElementById("scoreAlfa_gameOne").innerHTML = scoreAlfaArray_gameOne[scoreAlfaArray_gameOne.length - 1];
+                            document.getElementById("scoreZulu_gameOne").innerHTML = scoreZuluArray_gameOne[scoreZuluArray_gameOne.length - 1];
+                            document.getElementById("test1").innerHTML = scoreAlfaArray_gameOne;
+                            document.getElementById("test2").innerHTML = scoreZuluArray_gameOne;
+                            scoreAlfaArray_gameTwo = ["0"];
+                            scoreZuluArray_gameTwo = ["0"];
+                            document.getElementById("scoreAlfa_gameTwo").innerHTML = scoreAlfaArray_gameTwo[scoreAlfaArray_gameTwo.length-1];
+                            document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZuluArray_gameTwo[scoreZuluArray_gameTwo.length-1];
+                            document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
+                            document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
+                            break;
+                        }else {
+                            scoreAlfaArray_gameTwo.pop();
+                            scoreZuluArray_gameTwo.pop();
+                            scoreAlfa = scoreAlfaArray_gameTwo[scoreAlfaArray_gameTwo.length-1];
+                            scoreZulu = scoreZuluArray_gameTwo[scoreZuluArray_gameTwo.length-1];
+                            document.getElementById("scoreAlfa_gameTwo").innerHTML = scoreAlfaArray_gameTwo[scoreAlfaArray_gameTwo.length - 1];
+                            document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZuluArray_gameTwo[scoreZuluArray_gameTwo.length - 1];
+                            document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
+                            document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
+                            break;
+                        }
+                    case 3:
+                        if (scoreAlfaArray_gameThree[scoreAlfaArray_gameThree.length-1]==0 && scoreZuluArray_gameThree[scoreZuluArray_gameThree.length-1]==0){
+                            game--;
+                            scoreAlfaArray_gameTwo.pop();
+                            scoreZuluArray_gameTwo.pop();
+                            scoreAlfa = scoreAlfaArray_gameTwo[scoreAlfaArray_gameTwo.length - 1];
+                            scoreZulu = scoreZuluArray_gameTwo[scoreZuluArray_gameTwo.length - 1];
+                            document.getElementById("scoreAlfa_gameTwo").innerHTML = scoreAlfaArray_gameTwo[scoreAlfaArray_gameTwo.length - 1];
+                            document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZuluArray_gameTwo[scoreZuluArray_gameTwo.length - 1];
+                            document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
+                            document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
+                            scoreAlfaArray_gameThree = ["0"];
+                            scoreZuluArray_gameThree = ["0"];
+                            document.getElementById("scoreAlfa_gameThree").innerHTML = scoreAlfaArray_gameThree[scoreAlfaArray_gameThree.length-1];
+                            document.getElementById("scoreZulu_gameThree").innerHTML = scoreZuluArray_gameThree[scoreZuluArray_gameThree.length-1];
+                            document.getElementById("test5").innerHTML = scoreAlfaArray_gameThree;
+                            document.getElementById("test6").innerHTML = scoreZuluArray_gameThree;
+                            break;
+                        }else {
+                            scoreAlfaArray_gameThree.pop();
+                            scoreZuluArray_gameThree.pop();
+                            scoreAlfa = scoreAlfaArray_gameThree[scoreAlfaArray_gameThree.length-1];
+                            scoreZulu = scoreZuluArray_gameThree[scoreZuluArray_gameThree.length-1];
+                            document.getElementById("scoreAlfa_gameThree").innerHTML = scoreAlfaArray_gameThree[scoreAlfaArray_gameThree.length-1];
+                            document.getElementById("scoreZulu_gameThree").innerHTML = scoreZuluArray_gameThree[scoreZuluArray_gameThree.length-1];
+                            document.getElementById("test5").innerHTML = scoreAlfaArray_gameThree;
+                            document.getElementById("test6").innerHTML = scoreZuluArray_gameThree;
+                            break;
+                        }
+                    default:
+                        alert("Something is wrong with buttonUndo");
+                }
+
+
+
             }
         }
     </script>
