@@ -33,41 +33,49 @@
 
             </div>
         </nav>
-        <div class="tournamentName">Malaysia Open 2016</div>
-        <div class="team">
-            <p class="teamName" id="teamAlfa">Team Alfa</p>
-            <div class="player">
-                <p class="teamPlayer" id="playerAlfa">Player Alfa</p>
-                <p class="teamPlayer" id="playerBravo">Player Bravo</p>
+
+        <div class="container">
+            <h1 id="tournamentName" style="background-color: #FF9999">Malaysia Open 2016</h1>
+
+            <div class="row">
+
+                <div class="col-md-6" style="background-color: #CCDDAA">
+                    <p class="teamName" id="teamAlfa">Team Alfa</p>
+                    <div class="player">
+                        <p class="teamPlayer" id="playerAlfa">Player Alfa</p>
+                        <p class="teamPlayer" id="playerBravo">Player Bravo</p>
+                    </div>
+                    <div class="score">
+                        <p class="teamScore" id="scoreAlfa_gameOne">0</p>
+                        <p class="teamScore" id="scoreAlfa_gameTwo"></p>
+                        <p class="teamScore" id="scoreAlfa_gameThree"></p>
+                    </div>
+                    <button type="button" id="buttonAddScoreAlfa" onclick="scoringSystem()">+</button>
+                </div>
+                
+                <div class="col-md-6" style="background-color: #DDAACC">
+                    <p class="teamName" id="teamZulu">Team Zulu</p>
+                    <div class="player">
+                        <p class="teamPlayer" id="playerZulu">Player Zulu</p>
+                        <p class="teamPlayer" id="playerYankee">Player Yankee</p>
+                    </div>
+                    <div class="score">
+                        <p class="teamScore" id="scoreZulu_gameOne">0</p>
+                        <p class="teamScore" id="scoreZulu_gameTwo"></p>
+                        <p class="teamScore" id="scoreZulu_gameThree"></p>
+                    </div>
+                    <button type="button" id="buttonAddScoreZulu" onclick="scoringSystem()">+</button>
+                    <button type="button" id="buttonUndo">Undo</button>
+                </div>
+                <p id="notificationTest"></p>
+                <p id="test1"></p>
+                <p id="test2"></p>
+                <p id="test3"></p>
+                <p id="test4"></p>
+                <p id="test5"></p>
+                <p id="test6"></p>
             </div>
-            <div class="score">
-                <p class="teamScore" id="scoreAlfa_gameOne">0</p>
-                <p class="teamScore" id="scoreAlfa_gameTwo"></p>
-                <p class="teamScore" id="scoreAlfa_gameThree"></p>
-            </div>
-            <button type="button" id="buttonAddScoreAlfa" onclick="scoringSystem()">+</button>
         </div>
-        <div class="team">
-            <p class="teamName" id="teamZulu">Team Zulu</p>
-            <div class="player">
-                <p class="teamPlayer" id="playerZulu">Player Zulu</p>
-                <p class="teamPlayer" id="playerYankee">Player Yankee</p>
-            </div>
-            <div class="score">
-                <p class="teamScore" id="scoreZulu_gameOne">0</p>
-                <p class="teamScore" id="scoreZulu_gameTwo"></p>
-                <p class="teamScore" id="scoreZulu_gameThree"></p>
-            </div>
-            <button type="button" id="buttonAddScoreZulu" onclick="scoringSystem()">+</button>
-            <button type="button" id="buttonUndo">Undo</button>
-        </div>
-        <p id="notificationTest"></p>
-        <p id="test1"></p>
-        <p id="test2"></p>
-        <p id="test3"></p>
-        <p id="test4"></p>
-        <p id="test5"></p>
-        <p id="test6"></p>
     </body>
     <script>
         window.onload=scoringSystem();
