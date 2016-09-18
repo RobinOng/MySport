@@ -12,10 +12,28 @@
 
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <style>
+            body {
+                background-image: url("background_1.png");
+            }
+
+            #tournamentName{
+                background-color: black;
+                border-top: 1px solid #404040;
+                border-left: 1px solid #404040;
+                border-right: 1px solid #404040;
+                color: white;
+                font-size: 400%;
+                font-family: Arial, sans-serif;
+                text-align: center;
+                margin:0;
+            }
+        </style>
+
     </head>
     <body>
         <nav class="navbar navbar-default">
-            <div class="container-fluid">
+            <div class="container">
 
                 <!-- Logo -->
                 <div class="navbar-header">
@@ -35,38 +53,62 @@
         </nav>
 
         <div class="container">
-            <h1 id="tournamentName" style="background-color: #FF9999">Malaysia Open 2016</h1>
-
             <div class="row">
 
-                <div class="col-md-6" style="background-color: #CCDDAA">
-                    <p class="teamName" id="teamAlfa">Team Alfa</p>
-                    <div class="player">
-                        <p class="teamPlayer" id="playerAlfa">Player Alfa</p>
-                        <p class="teamPlayer" id="playerBravo">Player Bravo</p>
+                <div class="col-md-12" id="tournamentName">Tournament 123</div>
+
+
+
+
+
+
+                <div class="col-md-12" style="background-color: #FEDCBA">
+                    <div class="col-md-3" style="background-color: #EFABCD">
+                        <h3>Team Alfa</h3>
+                        <button type="button" class="btn btn-default btn-lg" id="buttonAddScoreAlfa">
+                            <p>Team Alfa</p>
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true">
+                        </button>
                     </div>
-                    <div class="score">
-                        <p class="teamScore" id="scoreAlfa_gameOne">0</p>
-                        <p class="teamScore" id="scoreAlfa_gameTwo"></p>
-                        <p class="teamScore" id="scoreAlfa_gameThree"></p>
+                    <div class="col-md-6" style="background-color: #FECDAA">
+                        Game 2
+                        Timer HERE
                     </div>
-                    <button type="button" id="buttonAddScoreAlfa" onclick="scoringSystem()">+</button>
+                    <div class="col-md-3" style="background-color: #ABCDEF">
+                        <button type="button" id="buttonAddScoreZulu">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true">
+                        </button>
+                    </div>
                 </div>
-                
-                <div class="col-md-6" style="background-color: #DDAACC">
-                    <p class="teamName" id="teamZulu">Team Zulu</p>
-                    <div class="player">
-                        <p class="teamPlayer" id="playerZulu">Player Zulu</p>
-                        <p class="teamPlayer" id="playerYankee">Player Yankee</p>
+
+                <div class="col-md-12" style="background-color: #CCDDAA">
+                    <div class="row">
+                        <h2 class="teamName" id="teamAlfa">Team Alfa</h2>
+                        <div class="col-md-8">
+                            <p class="teamPlayer" id="playerAlfa">Player Alfa</p>
+                            <p class="teamPlayer" id="playerBravo">Player Bravo</p>
+                        </div>
+                        <p class="col-md-1" id="scoreAlfa_gameOne">0</p>
+                        <p class="col-md-1" id="scoreAlfa_gameTwo">0</p>
+                        <p class="col-md-1" id="scoreAlfa_gameThree">0</p>
                     </div>
-                    <div class="score">
-                        <p class="teamScore" id="scoreZulu_gameOne">0</p>
-                        <p class="teamScore" id="scoreZulu_gameTwo"></p>
-                        <p class="teamScore" id="scoreZulu_gameThree"></p>
-                    </div>
-                    <button type="button" id="buttonAddScoreZulu" onclick="scoringSystem()">+</button>
-                    <button type="button" id="buttonUndo">Undo</button>
                 </div>
+
+                <div class="col-md-12" style="background-color: #DDAACC">
+                    <div class="row">
+                        <h2 class="teamName" id="teamZulu">Team Zulu</h2>
+                        <div class="col-md-8">
+                            <p class="teamPlayer" id="playerZulu">Player Zulu</p>
+                            <p class="teamPlayer" id="playerYankee">Player Yankee</p>
+                        </div>
+                        <p class="col-md-1" id="scoreZulu_gameOne">0</p>
+                        <p class="col-md-1" id="scoreZulu_gameTwo">0</p>
+                        <p class="col-md-1" id="scoreZulu_gameThree">0</p>
+                    </div>
+                </div>
+
+                <div class="col-md-12" style="background-color: #FEDCBA">
+                <button type="button" id="buttonUndo">Undo</button>
                 <p id="notificationTest"></p>
                 <p id="test1"></p>
                 <p id="test2"></p>
@@ -74,6 +116,9 @@
                 <p id="test4"></p>
                 <p id="test5"></p>
                 <p id="test6"></p>
+                    </div>
+
+                
             </div>
         </div>
     </body>
