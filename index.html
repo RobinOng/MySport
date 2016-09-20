@@ -12,35 +12,73 @@
 
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <!-- Google icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
         <style>
             body {
-                background-image: url("background_1.png");
+                background-image: url("background_3.jpg");
             }
 
             #tournamentName{
                 background-color: black;
-                border-top: 1px solid #404040;
-                border-left: 1px solid #404040;
-                border-right: 1px solid #404040;
+                border: 1px solid #404040;
                 color: white;
                 font-size: 400%;
                 font-family: Arial, sans-serif;
                 text-align: center;
-                margin:0;
+                margin-top:1%;
+                margin-bottom:1%;
+            }
+
+            #court{
+                margin-bottom:1%;
+            }
+
+            #scoreAlfa_current, #scoreZulu_current{
+                font-family: "Courier New", Courier, monospace;
+                font-size: 150%;
+                color: white;
+            }
+
+            #scoreAlfa_gameOne, #scoreAlfa_gameTwo, #scoreAlfa_gameThree, #scoreZulu_gameOne, #scoreZulu_gameTwo, #scoreZulu_gameThree{
+                font-size: 245%;
+                color: white;
+                text-align: center;
+                font-family: "Courier New", Courier, monospace;
+            }
+
+            #resultTableHeader{
+                background-color: #303030;
+                border-top: 5px solid deepskyblue;
+                border-left: 1px solid #404040;
+                border-right: 1px solid #404040;
+                border-bottom: 1px solid #404040;
+                margin-top:1%;
+                color: white;
+                font-size: 150%;
+                padding-top: 1%;
+            }
+
+            #resultTablePlayer, #resultTableScore{
+                background-color: black;
+                border: 1px solid #404040;
+                margin-bottom:1%;
+                color: white;
+                padding-top: 1%;
             }
         </style>
 
     </head>
     <body>
-        <nav class="navbar navbar-default">
+<!--        <nav class="navbar navbar-default">
             <div class="container">
 
-                <!-- Logo -->
                 <div class="navbar-header">
                     <a href="#" class="navbar-brand">ABC</a>
                 </div>
 
-                <!-- Menu Items -->
                 <div>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>
@@ -50,65 +88,115 @@
                 </div>
 
             </div>
-        </nav>
+        </nav>-->
 
         <div class="container">
             <div class="row">
 
                 <div class="col-md-12" id="tournamentName">Tournament 123</div>
 
+                <div class="col-md-12" id="court">
+                    <img src="badmintoncourt.png" alt="badmintoncourt" class="img-responsive">
+                </div>
 
 
 
 
-
-                <div class="col-md-12" style="background-color: #FEDCBA">
-                    <div class="col-md-3" style="background-color: #EFABCD">
+                <div class="col-md-12" style="background-color: black; text-align:center; color: white;">
+                    <div class="col-md-3" style="background-color: black;">
                         <h3>Team Alfa</h3>
-                        <button type="button" class="btn btn-default btn-lg" id="buttonAddScoreAlfa">
-                            <p>Team Alfa</p>
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true">
+                        <p id="scoreAlfa_current">0</p>
+                        <button type="button" class="btn btn-default" id="buttonAddScoreAlfa">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Point
                         </button>
                     </div>
-                    <div class="col-md-6" style="background-color: #FECDAA">
-                        Game 2
-                        Timer HERE
+                    <div class="col-md-6" style="background-color: black">
+                        <h3>Game 2</h3>
+                        <h4>Timer HERE</h4>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" id="buttonPlay"><i class="material-icons" style="font-size:100%">play_arrow</i> Play</button>
+                            <button type="button" class="btn btn-default" id="buttonPause"><i class="material-icons" style="font-size:100%">pause</i> Pause</button>
+                            <button type="button" class="btn btn-default" id="buttonUndo"><i class="material-icons" style="font-size:90%">undo</i> Undo</button>
+                        </div>
                     </div>
-                    <div class="col-md-3" style="background-color: #ABCDEF">
-                        <button type="button" id="buttonAddScoreZulu">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true">
+                    <div class="col-md-3" style="background-color: black">
+                        <p style="font-size: 150%; margin: 1%;">Team Zulu</p>
+                        <p id="scoreZulu_current">0</p>
+                        <button type="button" class="btn btn-default" id="buttonAddScoreZulu">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Point
                         </button>
                     </div>
                 </div>
 
-                <div class="col-md-12" style="background-color: #CCDDAA">
-                    <div class="row">
-                        <h2 class="teamName" id="teamAlfa">Team Alfa</h2>
-                        <div class="col-md-8">
-                            <p class="teamPlayer" id="playerAlfa">Player Alfa</p>
-                            <p class="teamPlayer" id="playerBravo">Player Bravo</p>
+
+
+
+
+
+                <!--                <div class="col-md-12" id="resultTable">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                           <h2 class="teamName" id="teamAlfa">Team Alfa</h2>
+                            <div class="col-md-9">
+                                <p class="teamPlayer" id="playerAlfa" style="color:white;">Player Alfa</p>
+                                <p class="teamPlayer" id="playerBravo" style="color:white;">Player Bravo</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p class="col-md-4" id="scoreAlfa_gameOne">0</p>
+                                <p class="col-md-4" id="scoreAlfa_gameTwo">0</p>
+                                <p class="col-md-4" id="scoreAlfa_gameThree">0</p>
+                            </div>
                         </div>
-                        <p class="col-md-1" id="scoreAlfa_gameOne">0</p>
-                        <p class="col-md-1" id="scoreAlfa_gameTwo">0</p>
-                        <p class="col-md-1" id="scoreAlfa_gameThree">0</p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row">
+                           <h2 class="teamName" id="teamZulu">Team Zulu</h2>
+                            <div class="col-md-9">
+                                <p class="teamPlayer" id="playerZulu" style="color:white;">Player Zulu</p>
+                                <p class="teamPlayer" id="playerYankee" style="color:white;">Player Yankee</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p class="col-md-2 col-md-offset-2" id="scoreZulu_gameOne">0</p>
+                                <p class="col-md-2 col-md-offset-2" id="scoreZulu_gameTwo">0</p>
+                                <p class="col-md-2 col-md-offset-2" id="scoreZulu_gameThree">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+
+
+
+                <div class="col-md-12" id="resultTable">
+                    <div class="col-md-12" id="resultTableHeader">
+                        <div class="col-md-6">Men Doubles - Quarterfinals</div>
+                        <p class="col-md-2" style="text-align: center">Game 1</p>
+                        <p class="col-md-2" style="text-align: center">Game 2</p>
+                        <p class="col-md-2" style="text-align: center">Game 3</p>
+                    </div>
+
+
+                    <div class="col-md-6" id="resultTablePlayer">
+                        <p class="teamPlayer" id="playerAlfa">Player Alfa</p>
+                        <p class="teamPlayer" id="playerBravo">Player Bravo</p>
+                        <p class="teamPlayer" id="playerZulu">Player Zulu</p>
+                        <p class="teamPlayer" id="playerYankee">Player Yankee</p>
+                    </div>
+                    <div class="col-md-6" id="resultTableScore">
+                        <p class="col-md-4" id="scoreAlfa_gameOne">0</p>
+                        <p class="col-md-4" id="scoreAlfa_gameTwo">0</p>
+                        <p class="col-md-4" id="scoreAlfa_gameThree">0</p>
+                        <p class="col-md-4" id="scoreZulu_gameOne">0</p>
+                        <p class="col-md-4" id="scoreZulu_gameTwo">0</p>
+                        <p class="col-md-4" id="scoreZulu_gameThree">0</p>
                     </div>
                 </div>
 
-                <div class="col-md-12" style="background-color: #DDAACC">
-                    <div class="row">
-                        <h2 class="teamName" id="teamZulu">Team Zulu</h2>
-                        <div class="col-md-8">
-                            <p class="teamPlayer" id="playerZulu">Player Zulu</p>
-                            <p class="teamPlayer" id="playerYankee">Player Yankee</p>
-                        </div>
-                        <p class="col-md-1" id="scoreZulu_gameOne">0</p>
-                        <p class="col-md-1" id="scoreZulu_gameTwo">0</p>
-                        <p class="col-md-1" id="scoreZulu_gameThree">0</p>
-                    </div>
-                </div>
 
-                <div class="col-md-12" style="background-color: #FEDCBA">
-                <button type="button" id="buttonUndo">Undo</button>
+
+
+                <div class="col-md-12" style="background-color: black">
                 <p id="notificationTest"></p>
                 <p id="test1"></p>
                 <p id="test2"></p>
@@ -118,7 +206,7 @@
                 <p id="test6"></p>
                     </div>
 
-                
+
             </div>
         </div>
     </body>
@@ -148,6 +236,8 @@
                             document.getElementById("scoreAlfa_gameOne").innerHTML = scoreAlfa.toString();
                             document.getElementById("test1").innerHTML = scoreAlfaArray_gameOne;
                             document.getElementById("test2").innerHTML = scoreZuluArray_gameOne;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         case 2:
                             scoreAlfaArray_gameTwo.push(scoreAlfa.toString());
@@ -155,6 +245,8 @@
                             document.getElementById("scoreAlfa_gameTwo").innerHTML = scoreAlfa.toString();
                             document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
                             document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         case 3:
                             scoreAlfaArray_gameThree.push(scoreAlfa.toString());
@@ -162,6 +254,8 @@
                             document.getElementById("scoreAlfa_gameThree").innerHTML = scoreAlfa.toString();
                             document.getElementById("test5").innerHTML = scoreAlfaArray_gameThree;
                             document.getElementById("test6").innerHTML = scoreZuluArray_gameThree;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         default:
                             alert("Something is wrong with buttonAddScoreAlfa");
@@ -180,6 +274,8 @@
                             document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZulu.toString();
                             document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
                             document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         case 3:
                             if (gameAlfa == 1 && gameZulu == 1){
@@ -188,6 +284,8 @@
                                 document.getElementById("scoreZulu_gameThree").innerHTML = scoreZulu.toString();
                                 document.getElementById("test5").innerHTML = scoreAlfaArray_gameThree;
                                 document.getElementById("test6").innerHTML = scoreZuluArray_gameThree;
+                                document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                                document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             }else{
                                 document.getElementById("notificationTest").innerHTML ="Match won by Team Alfa";
                             }
@@ -212,6 +310,8 @@
                             document.getElementById("scoreZulu_gameOne").innerHTML = scoreZulu.toString();
                             document.getElementById("test1").innerHTML = scoreAlfaArray_gameOne;
                             document.getElementById("test2").innerHTML = scoreZuluArray_gameOne;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         case 2:
                             scoreAlfaArray_gameTwo.push(scoreAlfa.toString());
@@ -219,6 +319,8 @@
                             document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZulu.toString();
                             document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
                             document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         case 3:
                             scoreAlfaArray_gameThree.push(scoreAlfa.toString());
@@ -226,6 +328,8 @@
                             document.getElementById("scoreZulu_gameThree").innerHTML = scoreZulu.toString();
                             document.getElementById("test5").innerHTML = scoreAlfaArray_gameThree;
                             document.getElementById("test6").innerHTML = scoreZuluArray_gameThree;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         default:
                             alert("Something is wrong with buttonAddScoreZulu");
@@ -244,6 +348,8 @@
                             document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZulu.toString();
                             document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
                             document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         case 3:
                             if (gameAlfa == 1 && gameZulu == 1){
@@ -252,6 +358,8 @@
                                 document.getElementById("scoreZulu_gameThree").innerHTML = scoreZulu.toString();
                                 document.getElementById("test5").innerHTML = scoreAlfaArray_gameThree;
                                 document.getElementById("test6").innerHTML = scoreZuluArray_gameThree;
+                                document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                                document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             }else{
                                 document.getElementById("notificationTest").innerHTML ="Match won by Team Zulu";
                             }
@@ -279,6 +387,8 @@
                             document.getElementById("scoreZulu_gameOne").innerHTML = scoreZuluArray_gameOne[scoreZuluArray_gameOne.length - 1];
                             document.getElementById("test1").innerHTML = scoreAlfaArray_gameOne;
                             document.getElementById("test2").innerHTML = scoreZuluArray_gameOne;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         }
                     case 2:
@@ -298,6 +408,8 @@
                             document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZuluArray_gameTwo[scoreZuluArray_gameTwo.length-1];
                             document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
                             document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         }else {
                             scoreAlfaArray_gameTwo.pop();
@@ -308,6 +420,8 @@
                             document.getElementById("scoreZulu_gameTwo").innerHTML = scoreZuluArray_gameTwo[scoreZuluArray_gameTwo.length - 1];
                             document.getElementById("test3").innerHTML = scoreAlfaArray_gameTwo;
                             document.getElementById("test4").innerHTML = scoreZuluArray_gameTwo;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         }
                     case 3:
@@ -327,6 +441,8 @@
                             document.getElementById("scoreZulu_gameThree").innerHTML = scoreZuluArray_gameThree[scoreZuluArray_gameThree.length-1];
                             document.getElementById("test5").innerHTML = scoreAlfaArray_gameThree;
                             document.getElementById("test6").innerHTML = scoreZuluArray_gameThree;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         }else {
                             scoreAlfaArray_gameThree.pop();
@@ -337,14 +453,13 @@
                             document.getElementById("scoreZulu_gameThree").innerHTML = scoreZuluArray_gameThree[scoreZuluArray_gameThree.length-1];
                             document.getElementById("test5").innerHTML = scoreAlfaArray_gameThree;
                             document.getElementById("test6").innerHTML = scoreZuluArray_gameThree;
+                            document.getElementById("scoreAlfa_current").innerHTML = scoreAlfa.toString();
+                            document.getElementById("scoreZulu_current").innerHTML = scoreZulu.toString();
                             break;
                         }
                     default:
                         alert("Something is wrong with buttonUndo");
                 }
-
-
-
             }
         }
     </script>
