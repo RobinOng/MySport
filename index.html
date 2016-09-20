@@ -4,14 +4,10 @@
         <meta charset="UTF-8">
         <title>Score</title>
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
         <!-- Google icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -21,7 +17,7 @@
                 background-image: url("background_3.jpg");
             }
 
-            #tournamentName{
+            #tournamentNameDisplay{
                 background-color: black;
                 border: 1px solid #404040;
                 color: white;
@@ -89,11 +85,58 @@
 
             </div>
         </nav>-->
+        <div class="modal fade" id="popUpWindow">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- header -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title">Match Info</h3>
+                    </div>
+
+                    <!-- body (form) -->
+                    <div class="modal-body">
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="tournamentNameInput" placeholder="Tournament Name">
+                            </div>
+                            Team 1
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="team1NameInput" placeholder="Team Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="player1NameInput" placeholder="Player 1's Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="player2NameInput" placeholder="Player 2's Name">
+                            </div>
+                            Team 2
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="team2NameInput" placeholder="Team Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="player3NameInput" placeholder="Player 3's Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="player4NameInput" placeholder="Player 4's Name">
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- button -->
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-block" data-dismiss="modal" id="submitInputButton">Submit</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
         <div class="container">
             <div class="row">
 
-                <div class="col-md-12" id="tournamentName">Tournament 123</div>
+                <div class="col-md-12" id="tournamentNameDisplay">Tournament 123</div>
 
                 <div class="col-md-12" id="court">
                     <img src="badmintoncourt.png" alt="badmintoncourt" class="img-responsive">
@@ -114,7 +157,7 @@
                         <h3>Game 2</h3>
                         <h4>Timer HERE</h4>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default" id="buttonPlay"><i class="material-icons" style="font-size:100%">play_arrow</i> Play</button>
+                            <button type="button" class="btn btn-default" id="buttonPlay" data-toggle="modal" data-target="#popUpWindow"><i class="material-icons" style="font-size:100%">play_arrow</i> Play</button>
                             <button type="button" class="btn btn-default" id="buttonPause"><i class="material-icons" style="font-size:100%">pause</i> Pause</button>
                             <button type="button" class="btn btn-default" id="buttonUndo"><i class="material-icons" style="font-size:90%">undo</i> Undo</button>
                         </div>
@@ -211,7 +254,28 @@
         </div>
     </body>
     <script>
-        window.onload=scoringSystem();
+        $(window).load(function(){
+            $('#popUpWindow').modal('show');
+        });
+
+/*        $("#submitInputButton").click(function( event ) {
+            var tournamentName = document.getElementById("tournamentNameInput").innerHTML;
+            var team1Name = document.getElementById("team1NameInput").innerHTML;
+            var player1Name = document.getElementById("player1NameInput").innerHTML;
+            var player2Name = document.getElementById("player2NameInput").innerHTML;
+            var team2Name = document.getElementById("team1NameInput").innerHTML;
+            var player3Name = document.getElementById("player3NameInput").innerHTML;
+            var player4Name = document.getElementById("player4NameInput").innerHTML;
+
+            if (tournamentName=="" || team1Name=="" || player1Name=="" || player2Name=="" || team2Name=="" || player3Name=="" || player4Name==""){
+                return false;
+            }else{
+                scoringSystem();
+                return true;
+            }
+        });*/
+
+
         function scoringSystem(){
             var scoreAlfa = 0;
             var scoreZulu = 0;
@@ -462,5 +526,9 @@
                 }
             }
         }
+
+        $(window).load(function(){
+            $('#myModal').modal('show');
+        });
     </script>
 </html>
