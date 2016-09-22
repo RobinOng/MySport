@@ -171,23 +171,24 @@
                     <div class="col-md-3" style="background-color: black;">
                         <h3 id="team1NameDisplay"></h3>
                         <p id="scoreTeam1_current">0</p>
-                        <button type="button" class="btn btn-default" id="team1AddScoreButton">
+                        <button type="button" class="btn btn-default" id="team1AddScoreButton" disabled>
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Point
                         </button>
                     </div>
                     <div class="col-md-6" style="background-color: black">
                         <h3 id="currentGameDisplay">Game 2</h3>
-                        <h4>Timer HERE</h4>
+                        <h4 id="gameTimerDisplay"></h4>
                         <div class="btn-group">
                             <button type="button" class="btn btn-default" id="playButton" onclick="timerSystem()"><i class="material-icons" style="font-size:100%">play_arrow</i> Play</button>
-                            <button type="button" class="btn btn-default" id="startNewMatchButton" data-toggle="modal" data-target="#popUpWindow"><i class="material-icons" style="font-size:100%">pause</i> Start New Match</button>
+<!--                            <button type="button" class="btn btn-default" id="startNewMatchButton" data-toggle="modal" data-target="#popUpWindow"><i class="material-icons" style="font-size:100%">power_settings_new</i> Start New Match</button>-->
+                            <button type="button" class="btn btn-default" id="stopButton" disabled><i class="material-icons" style="font-size:100%">stop</i> Stop</button>
                             <button type="button" class="btn btn-default" id="undoButton" disabled><i class="material-icons" style="font-size:90%">undo</i> Undo</button>
                         </div>
                     </div>
                     <div class="col-md-3" style="background-color: black">
                         <h3 id="team2NameDisplay"></h3>
                         <p id="scoreTeam2_current">0</p>
-                        <button type="button" class="btn btn-default" id="team2AddScoreButton">
+                        <button type="button" class="btn btn-default" id="team2AddScoreButton" disabled>
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Point
                         </button>
                     </div>
@@ -324,6 +325,12 @@
             var scoreTeam1Array_gameThree = ["0"];
             var scoreTeam2Array_gameThree = ["0"];
 
+            //Enable and disable appropriate buttons
+
+            document.getElementById("playButton").disabled = true;
+            document.getElementById("stopButton").disabled = false;
+            document.getElementById("team1AddScoreButton").disabled = false;
+            document.getElementById("team2AddScoreButton").disabled = false;
 
             document.getElementById("team1AddScoreButton").onclick = function(){
                 scoreTeam1++;
@@ -579,26 +586,31 @@
                     hour++;
                     minute = 0;
                 }
+
+                displayTimer(hour,minute,second);
             }
 
-            function stopTimer(){
-                clearInterval(matchtimer);
+            document.getElementById("stopButton").onclick = function(){
+                clearInterval(matchTimer);
+                var endDate = new Date();
             }
         }
 
-        function stopTimer(){
-            var endDate = new Date();
-            var endHour = endDate.getHours();
-            var endMinute = endDate.getMinutes();
-        }
+        function displayTimer(hr,min,sec){
+            var hrTenth = Math.floor(hr/10);
+            var minTenth = Math.floor(min/10);
+            var secTenth = Math.floor(sec/10);
 
-        function calculateTimer(){
-
-        }
-
-        function displayTimer(){
-
-
+            while (hr>9){
+                hr = hr-10;
+            }
+            while (min>9){
+                min = min-10;
+            }
+            while (sec>9){
+                sec = sec-10;
+            }
+            document.getElementById("gameTimerDisplay").innerHTML = hrTenth.toString() + hr.toString() + ":" + minTenth.toString() + min.toString() + ":" + secTenth.toString()+ sec.toString();
         }
     </script>
 </html>
