@@ -179,7 +179,7 @@
                         <h3 id="currentGameDisplay">Game 1</h3>
                         <h4 id="gameTimerDisplay"></h4>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default" id="playButton" onclick="timerSystem()"><i class="material-icons" style="font-size:100%">play_arrow</i> Play</button>
+                            <button type="button" class="btn btn-default" id="playButton" onclick="timerSystem()" disabled><i class="material-icons" style="font-size:100%">play_arrow</i> Play</button>
 <!--                            <button type="button" class="btn btn-default" id="startNewMatchButton" data-toggle="modal" data-target="#popUpWindow"><i class="material-icons" style="font-size:100%">power_settings_new</i> Start New Match</button>-->
                             <button type="button" class="btn btn-default" id="stopButton" disabled><i class="material-icons" style="font-size:100%">stop</i> Stop</button>
                             <button type="button" class="btn btn-default" id="undoButton" disabled><i class="material-icons" style="font-size:90%">undo</i> Undo</button>
@@ -294,6 +294,7 @@
                 return false;
             }else{
                 displayInput(tournamentName, team1Name, player1Name, player2Name, team2Name, player3Name, player4Name);
+                document.getElementById("playButton").disabled = false;
 //EDIT               scoringSystem();
                 return true;
             }
