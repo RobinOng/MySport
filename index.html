@@ -18,6 +18,10 @@
             background-size: 100%;
         }
 
+        #testing{
+            background-image: url("court1.png");
+            background-size: 100%;
+        }
         nav{
             box-shadow: 3px 3px 20px #888888;
         }
@@ -49,7 +53,6 @@
         }
 
         #team1Display, #team2Display{
-            border: 1px solid grey;
             border-radius: 10px;
             color: white;
             font-family: Verdana, Geneva, sans-serif;
@@ -69,7 +72,6 @@
         }
 
         #currentGameScoreDisplay{
-            border: 1px solid grey;
             border-radius: 10px;
             color: white;
             font-family: Verdana, Geneva, sans-serif;
@@ -120,26 +122,107 @@
         #panelDisplay{
             text-align: center;
         }
+
+        #team1AddScoreButton, #team2AddScoreButton{
+            padding: 15px;
+        }
+
+        .btn-group{
+            box-shadow: 1px 1px 5px #888888;
+        }
+
+        #playButton, #stopButton, #undoButton{
+            padding: 15px;
+        }
     </style>
 </head>
 <body>
+    <div class="modal fade bs-example-modal-lg" id="popUpWindow">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+<!--                    <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                    <h3 class="modal-title">Match Setup</h3>
+                </div>
+
+                <!-- body (form) -->
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <form role="form">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="tournamentNameInput" placeholder="Tournament Name" maxlength="40">
+                                </div>
+
+                        <!-- <div class="dropdown">
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events Type <span class="caret"></span></a>
+                             <ul class="dropdown-menu" id="myid">
+                                <!-- <li><a href="#" onclick="clickSingles()">Men's Singles</a></li>
+                                 <li><a href="#" onclick="clickDoubles()">Men's Doubles</a></li>
+                                 <li><a href="#" onclick="clickSingles()">Women's Singles</a></li>
+                                 <li><a href="#" onclick="clickDoubles()">Women's Doubles</a></li>
+                                 <li><a href="#" onclick="clickDoubles()">Mixed Doubles</a></li>
+                                 <li><a href="#">Men's Singles</a></li>
+                                 <li><a href="#">Men's Singles</a></li>
+                             </ul>
+                         </div>
+
+                         <div class="dropdown">
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Scoring System <span class="caret"></span></a>
+                             <ul class="dropdown-menu">
+                                 <li><a href="#">3 &times 21</a></li>
+                                 <li><a href="#">3 &times 15</a></li>
+                             </ul>
+                         </div>-->
+                        <div class="col-xs-12 col-md-12" id="testing">
+                        <div class="col-xs-5 col-md-5">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="team1NameInput" placeholder="Team Name" maxlength="40">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="player1NameInput" placeholder="Player 1's Name" maxlength="40">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="player3NameInput" placeholder="Player 3's Name" maxlength="40">
+                            </div>
+                        </div>
+
+                        <div class="col-xs-5 col-xs-offset-2 col-md-5 col-md-offset-2">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="team2NameInput" placeholder="Team Name" maxlength="40">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="player2NameInput" placeholder="Player 2's Name" maxlength="40">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="player4NameInput" placeholder="Player 4's Name" maxlength="40">
+                        </div>
+                            </div>
+                            </div>
+                    </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-block" data-dismiss="modal" id="submitInputButton">Submit</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <!-- Top Navigation Bar -->
     <nav class="navbar navbar-default">
 
         <!-- Logo -->
         <div class="navbar-header">
-            <a href="http://www.matchseason.com"><img src="logo.png" alt="MatchSeason" /></a>
+            <!--<a href="http://www.matchseason.com"><img src="logo.png" alt="MatchSeason" /></a>-->
+            <a href="http://www.matchseason.com">MatchSeason</a>
         </div>
-
-            <!--
-            <div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>-->
     </nav>
 
     <!-- Page Content -->
@@ -147,22 +230,22 @@
         <div class="row">
 
             <!-- Tournament -->
-            <div class="col-xs-12 col-md-12" id="tournamentNameDisplay">MALAYSIA OPEN 2016</div>
+            <div class="col-xs-12 col-md-12" id="tournamentNameDisplay">Tournament Name</div>
 
             <!-- Team 1 -->
             <div class="col-xs-5 col-md-5" id="team1Display">
 
                 <!-- Player 1 -->
                 <div class="col-xs-12 col-md-12" id="player1Display">
-                    <div class="col-xs-12 col-md-12" id="player1NameDisplay">Robin Ong</div>
+                    <div class="col-xs-12 col-md-12" id="player1NameDisplay">Player 1</div>
                 </div>
 
                 <!-- Team 1 Name -->
-                <div class="col-xs-12 col-md-12" id="team1NameDisplay">(Malaysia)</div>
+                <div class="col-xs-12 col-md-12" id="team1NameDisplay">Team 1</div>
 
                 <!-- Player 3 -->
                 <div class="col-xs-12 col-md-12" id="player3Display">
-                    <div class="col-xs-12 col-md-12" id="player3NameDisplay">Robin Ong</div>
+                    <div class="col-xs-12 col-md-12" id="player3NameDisplay">Player 3</div>
                 </div>
             </div>
 
@@ -171,15 +254,15 @@
 
                 <!-- Player 2 -->
                 <div class="col-xs-12 col-md-12" id="player2Display">
-                    <div class="col-xs-12 col-md-12" id="player2NameDisplay">Robin Ong</div>
+                    <div class="col-xs-12 col-md-12" id="player2NameDisplay">Player 2</div>
                 </div>
 
                 <!-- Team 2 Name -->
-                <div class="col-xs-12 col-md-12" id="team2NameDisplay">(Malaysia)aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+                <div class="col-xs-12 col-md-12" id="team2NameDisplay">Team 2</div>
 
                 <!-- Player 4 -->
                 <div class="col-xs-12 col-md-12" id="player4Display">
-                    <div class="col-xs-12 col-md-12" id="player4NameDisplay">Robin Ong</div>
+                    <div class="col-xs-12 col-md-12" id="player4NameDisplay">Player 4</div>
                 </div>
             </div>
 
@@ -208,7 +291,7 @@
                 </div>
 
                 <!-- Control Panel Button -->
-                <div class="col-xs-6 col-md-4">
+                <div class="col-xs-6 col-md-4" id="controlPanelDisplay">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default" id="playButton" disabled><i class="material-icons" style="font-size:100%">play_arrow</i> Play</button>
                         <button type="button" class="btn btn-default" id="stopButton" disabled><i class="material-icons" style="font-size:100%">stop</i> Stop</button>
@@ -230,13 +313,441 @@
 
                 <!-- Match Score -->
                 <div class="col-xs-12 col-md-12" id="matchScoreDisplay" style="margin-top: 0">
-                    <div class="col-xs-12 col-md-12">21 - 13</div>
-                    <div class="col-xs-12 col-md-12">&nbsp;&nbsp;3 - 21</div>
-                    <div class="col-xs-12 col-md-12">21 - 3&nbsp;&nbsp;</div>
+                    <div class="col-xs-12 col-md-12" id="game1ScoreDisplay">0&nbsp; - &nbsp;0</div>
+                    <div class="col-xs-12 col-md-12" id="game2ScoreDisplay">0&nbsp; - &nbsp;0</div>
+                    <div class="col-xs-12 col-md-12" id="game3ScoreDisplay">0&nbsp; - &nbsp;0</div>
                 </div>
             </div>
-            
+
+            <div class="col-xs-12 col-md-12" id="notificationTest"></div>
         </div>
     </div>
 </body>
+
+<script>
+    // Load Match Setup onload
+    $(window).load(function(){
+        $('#popUpWindow').modal('show');
+    });
+
+    // Prevent modal from closing
+    $('#popUpWindow').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    // When Submit button is clicked
+    $("#submitInputButton").click(function() {
+        var tournamentName = document.getElementById("tournamentNameInput").value;
+        var team1Name = document.getElementById("team1NameInput").value;
+        var player1Name = document.getElementById("player1NameInput").value;
+        var player2Name = document.getElementById("player2NameInput").value;
+        var team2Name = document.getElementById("team2NameInput").value;
+        var player3Name = document.getElementById("player3NameInput").value;
+        var player4Name = document.getElementById("player4NameInput").value;
+
+        // Check if all Inputs are filled
+        if (tournamentName=="" || team1Name=="" || player1Name=="" || player2Name=="" || team2Name=="" || player3Name=="" || player4Name=="") {
+            return false;
+        } else {
+            // Call function to display tournament and players name
+            displayInput(tournamentName, team1Name, player1Name, player2Name, team2Name, player3Name, player4Name);
+
+            // Enable and disable appropriate buttons
+            document.getElementById("playButton").disabled = false;
+            return true;
+        }
+    });
+
+    // Display tournament and players name
+    function displayInput(tournament, team1, player1, player2, team2, player3, player4) {
+        document.getElementById("tournamentNameDisplay").innerHTML = tournament;
+        document.getElementById("team1NameDisplay").innerHTML = team1;
+        document.getElementById("team2NameDisplay").innerHTML = team2;
+        document.getElementById("player1NameDisplay").innerHTML = player1;
+        document.getElementById("player3NameDisplay").innerHTML = player3;
+        document.getElementById("player2NameDisplay").innerHTML = player2;
+        document.getElementById("player4NameDisplay").innerHTML = player4;
+    }
+
+    // When Play button is clicked
+    $("#playButton").click(function() {
+
+        // Enable and disable appropriate buttons
+        document.getElementById("playButton").disabled = true;
+        document.getElementById("stopButton").disabled = false;
+
+        // Start scoring system
+        scoringSystem();
+
+        // Get start time
+        var startDate = new Date();
+
+        // Start timer
+        var second = 0;
+        var minute = 0;
+        var hour = 0;
+        var matchTimer = setInterval(timer, 1000);
+
+        // Timer
+        function timer() {
+
+            // Add Second every 1000 millisecond
+            second++;
+
+            // Add Minute every 60 seconds
+            if (second == 60) {
+                minute++;
+                second = 0;
+            }
+
+            // Add Hour every 60 minutes
+            if (minute == 60) {
+                hour++;
+                minute = 0;
+            }
+
+            // Call function to display timer
+            displayTimer(hour,minute,second);
+            return second,minute,hour;
+        }
+
+        // When Stop button is clicked
+        $("#stopButton").click(function() {
+
+            // Enable and disable appropriate buttons
+            document.getElementById("playButton").disabled = false;
+            document.getElementById("stopButton").disabled = true;
+
+            // Stop timer
+            clearInterval(matchTimer);
+
+            // Get end time
+            var endDate = new Date();
+        });
+    });
+
+    // Display timer
+    function displayTimer(hr,min,sec) {
+
+        // Get 2nd digit
+        var hrTenth = Math.floor(hr/10);
+        var minTenth = Math.floor(min/10);
+        var secTenth = Math.floor(sec/10);
+
+        // Get 1st digit
+        while (hr>9) {
+            hr = hr-10;
+        }
+        while (min>9) {
+            min = min-10;
+        }
+        while (sec>9) {
+            sec = sec-10;
+        }
+
+        // Display in HTML
+        document.getElementById("currentGameTimerDisplay").innerHTML = hrTenth.toString() + hr.toString() + ":" + minTenth.toString() + min.toString() + ":" + secTenth.toString()+ sec.toString();
+    }
+
+    function scoringSystem() {
+
+        // Enable and disable appropriate buttons
+        document.getElementById("team1AddScoreButton").disabled = false;
+        document.getElementById("team2AddScoreButton").disabled = false;
+
+        // 21-points system
+        var maxScore = 30;
+        var winScore = 21;
+        var deuceScore = 20;
+        var maxGame = 3;
+
+        //Initial condition
+        var scoreTeam1 = 0;
+        var scoreTeam2 = 0;
+        var game = 1;
+        var gameTeam1 = 0;
+        var gameTeam2 = 0;
+        var scoreTeam1Array_gameOne = ["0"];
+        var scoreTeam2Array_gameOne = ["0"];
+        var scoreTeam1Array_gameTwo = ["0"];
+        var scoreTeam2Array_gameTwo = ["0"];
+        var scoreTeam1Array_gameThree = ["0"];
+        var scoreTeam2Array_gameThree = ["0"];
+
+        $("#team1AddScoreButton").click(function() {
+            scoreTeam1++;
+
+            // Enable and disable appropriate buttons
+            if (game == 1 && scoreTeam1 == 1) {
+                document.getElementById("undoButton").disabled = false;
+            }
+
+            // Add score
+            if (scoreTeam1 <= winScore) {
+                switch (game) {
+                    case 1:
+                        scoreTeam1Array_gameOne.push(scoreTeam1.toString());
+                        scoreTeam2Array_gameOne.push(scoreTeam2.toString());
+                        break;
+                    case 2:
+                        scoreTeam1Array_gameTwo.push(scoreTeam1.toString());
+                        scoreTeam2Array_gameTwo.push(scoreTeam2.toString());
+                        break;
+                    case 3:
+                        scoreTeam1Array_gameThree.push(scoreTeam1.toString());
+                        scoreTeam2Array_gameThree.push(scoreTeam2.toString());
+                        break;
+                    default:
+                        alert("Something is wrong with team1AddScoreButton's AddScore function");
+                }
+                document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+            }
+
+            // Deuce happen
+            if (scoreTeam1 == deuceScore && scoreTeam2 == deuceScore && winScore < maxScore) {
+                winScore++;
+                deuceScore++;
+            }
+
+            // Game won
+            if (scoreTeam1 == winScore) {
+                displayMatchScore(scoreTeam1, scoreTeam2, 1, game);
+                game++;
+                gameTeam1++;
+                scoreTeam1 = 0;
+                scoreTeam2 = 0;
+                winScore = 21;
+                deuceScore = 20;
+                if (game <= maxGame) {
+                    document.getElementById("currentGameNumberDisplay").innerHTML = "Game " + game;
+                }
+                switch (game) {
+                    case 2:
+                        document.getElementById("notificationTest").innerHTML ="Game 1 won by " + document.getElementById("team1NameInput").value;
+                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                        break;
+                    case 3:
+                        if (gameTeam1 == 1 && gameTeam2 == 1){
+                            document.getElementById("notificationTest").innerHTML ="Game 2 won by " + document.getElementById("team1NameInput").value;
+                            document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                            document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                        }else{
+                            document.getElementById("notificationTest").innerHTML ="Match won by " + document.getElementById("team1NameInput").value;
+
+                            // Enable and disable appropriate buttons
+                            document.getElementById("team1AddScoreButton").disabled = true;
+                            document.getElementById("team2AddScoreButton").disabled = true;
+                        }
+                        break;
+                    case 4:
+                        document.getElementById("notificationTest").innerHTML ="Match won by " + document.getElementById("team1NameInput").value;
+
+                        // Enable and disable appropriate buttons
+                        document.getElementById("team1AddScoreButton").disabled = true;
+                        document.getElementById("team2AddScoreButton").disabled = true;
+                        break;
+                    default:
+                        alert("Something is wrong with team1AddScoreButton's GameWon function");
+                }
+            }
+        });
+
+        $("#team2AddScoreButton").click(function() {
+            scoreTeam2++;
+
+            // Enable and disable appropriate buttons
+            if (game == 1 && scoreTeam2 == 1) {
+                document.getElementById("undoButton").disabled = false;
+            }
+
+            // Add score
+            if (scoreTeam2 <= winScore) {
+                switch (game) {
+                    case 1:
+                        scoreTeam1Array_gameOne.push(scoreTeam1.toString());
+                        scoreTeam2Array_gameOne.push(scoreTeam2.toString());
+                        break;
+                    case 2:
+                        scoreTeam1Array_gameTwo.push(scoreTeam1.toString());
+                        scoreTeam2Array_gameTwo.push(scoreTeam2.toString());
+                        break;
+                    case 3:
+                        scoreTeam1Array_gameThree.push(scoreTeam1.toString());
+                        scoreTeam2Array_gameThree.push(scoreTeam2.toString());
+                        break;
+                    default:
+                        alert("Something is wrong with team2AddScoreButton's AddScore function");
+                }
+                document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+            }
+
+            // Deuce happen
+            if (scoreTeam1 == deuceScore && scoreTeam2 == deuceScore && winScore < maxScore) {
+                winScore++;
+                deuceScore++;
+            }
+
+            // Game won
+            if (scoreTeam2 == winScore) {
+                displayMatchScore(scoreTeam2, scoreTeam1, 2, game);
+                game++;
+                gameTeam2++;
+                scoreTeam1 = 0;
+                scoreTeam2 = 0;
+                winScore = 21;
+                deuceScore = 20;
+                if (game <= maxGame) {
+                    document.getElementById("currentGameNumberDisplay").innerHTML = "Game " + game;
+                }
+                switch (game) {
+                    case 2:
+                        document.getElementById("notificationTest").innerHTML ="Game 1 won by " + document.getElementById("team2NameInput").value;
+                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                        break;
+                    case 3:
+                        if (gameTeam1 == 1 && gameTeam2 == 1){
+                            document.getElementById("notificationTest").innerHTML ="Game 2 won by " + document.getElementById("team2NameInput").value;
+                            document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                            document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                        } else {
+                            document.getElementById("notificationTest").innerHTML ="Match won by " + document.getElementById("team2NameInput").value;
+
+                            // Enable and disable appropriate buttons
+                            document.getElementById("team1AddScoreButton").disabled = true;
+                            document.getElementById("team2AddScoreButton").disabled = true;
+                        }
+                        break;
+                    case 4:
+                        document.getElementById("notificationTest").innerHTML ="Match won by " + document.getElementById("team2NameInput").value;
+
+                        // Enable and disable appropriate buttons
+                        document.getElementById("team1AddScoreButton").disabled = true;
+                        document.getElementById("team2AddScoreButton").disabled = true;
+                        break;
+                    default:
+                        alert("Something is wrong with team2AddScoreButton's GameWon function");
+                }
+            }
+        });
+
+        // Display Match Score
+        function displayMatchScore(winningTeamScore, losingTeamScore, winningTeam, winningGameNumber) {
+
+            // Check which game score to update
+            switch (winningGameNumber) {
+                case 1:
+                    var gameNumberScoreDisplay = "game1ScoreDisplay";
+                    break;
+                case 2:
+                    var gameNumberScoreDisplay = "game2ScoreDisplay";
+                    break;
+                case 3:
+                    var gameNumberScoreDisplay = "game3ScoreDisplay";
+                    break;
+            }
+
+            // Check if losing team score is double digit
+            switch (winningTeam) {
+                // Team 1 win
+                case 1:
+                    if (losingTeamScore < 10) {
+                        document.getElementById(gameNumberScoreDisplay).innerHTML = winningTeamScore + " - " + "&nbsp;" + losingTeamScore + "&nbsp;";
+                    } else {
+                        document.getElementById(gameNumberScoreDisplay).innerHTML = winningTeamScore + " - " + losingTeamScore;
+                    }
+                    break;
+
+                // Team 2 win
+                case 2:
+                    if (losingTeamScore < 10) {
+                        document.getElementById(gameNumberScoreDisplay).innerHTML = "&nbsp;" + losingTeamScore + "&nbsp;" + " - " + winningTeamScore;
+                    } else {
+                        document.getElementById(gameNumberScoreDisplay).innerHTML = losingTeamScore + " - " + winningTeamScore;
+                    }
+                    break;
+
+                default:
+                    alert("Something is wrong with displayMatchScore function");
+            }
+        }
+
+        // When Undo button is clicked
+        $("#undoButton").click(function() {
+            switch (game){
+                case 1:
+                    if ((scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length-1]==1 && scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length-1]==0) || (scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length-1]==0 && scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length-1]==1)){
+                        scoreTeam1Array_gameOne.pop();
+                        scoreTeam2Array_gameOne.pop();
+                        scoreTeam1 = scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length - 1];
+                        scoreTeam2 = scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length - 1];
+                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                        document.getElementById("undoButton").disabled = true;
+                        break;
+                    }else{
+                        scoreTeam1Array_gameOne.pop();
+                        scoreTeam2Array_gameOne.pop();
+                        scoreTeam1 = scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length - 1];
+                        scoreTeam2 = scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length - 1];
+                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                        break;
+                    }
+                case 2:
+                    if (scoreTeam1Array_gameTwo[scoreTeam1Array_gameTwo.length-1]==0 && scoreTeam2Array_gameTwo[scoreTeam2Array_gameTwo.length-1]==0){
+                        game--;
+                        scoreTeam1Array_gameOne.pop();
+                        scoreTeam2Array_gameOne.pop();
+                        scoreTeam1 = scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length - 1];
+                        scoreTeam2 = scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length - 1];
+
+                        scoreTeam1Array_gameTwo = ["0"];
+                        scoreTeam2Array_gameTwo = ["0"];
+
+                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                        break;
+                    }else {
+                        scoreTeam1Array_gameTwo.pop();
+                        scoreTeam2Array_gameTwo.pop();
+                        scoreTeam1 = scoreTeam1Array_gameTwo[scoreTeam1Array_gameTwo.length-1];
+                        scoreTeam2 = scoreTeam2Array_gameTwo[scoreTeam2Array_gameTwo.length-1];
+
+                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam1.toString();
+                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                        break;
+                    }
+                case 3:
+                    if (scoreTeam1Array_gameThree[scorTeam1Array_gameThree.length-1]==0 && scoreTeam2Array_gameThree[scoreTeam2Array_gameThree.length-1]==0){
+                        game--;
+                        scoreTeam1Array_gameTwo.pop();
+                        scoreTeam2Array_gameTwo.pop();
+                        scoreTeam1 = scoreTeam1Array_gameTwo[scoreTeam1Array_gameTwo.length - 1];
+                        scoreTeam2 = scoreTeam2Array_gameTwo[scoreTeam2Array_gameTwo.length - 1];
+
+                        scoreTeam1Array_gameThree = ["0"];
+                        scoreTeam2Array_gameThree = ["0"];
+
+                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                        break;
+                    }else {
+                        scoreTeam1Array_gameThree.pop();
+                        scoreTeam2Array_gameThree.pop();
+                        scoreTeam1 = scoreTeam1Array_gameThree[scoreTeam1Array_gameThree.length-1];
+                        scoreTeam2 = scoreTeam2Array_gameThree[scoreTeam2Array_gameThree.length-1];
+
+                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                        break;
+                    }
+                default:
+                    alert("Something is wrong with undoButton");
+            }
+        });
+    }
+</script>
 </html>

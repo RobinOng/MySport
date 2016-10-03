@@ -575,7 +575,7 @@
             var second = 0;
 
             scoringSystem();
-            var matchTimer = setInterval(function(){ clockTimer() }, 1000);
+            var matchTimer = setInterval(clockTimer, 1000);
 
             function clockTimer(){
                 second++;
