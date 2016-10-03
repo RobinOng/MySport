@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MatchSeason LiveScore</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <!-- Google icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: black;
+        }
+
+        div{
+            margin-top:1%;
+            margin-bottom:1%;
+        }
+        #tournamentNameDisplay{
+            background-color: black;
+            border: 1px solid #404040;
+            color: white;
+            font-size: 300%;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow:hidden;
+            text-overflow:ellipsis
+        }
+
+        #tournamentNameDisplay:hover{
+            text-overflow: inherit;
+            overflow: visible;
+        }
+
+        #courtDisplay{
+        }
+
+        #scorePanelDisplay{
+            border: 1px solid #404040;
+            text-align: center;
+            color: white;
+        }
+
+        #currentGameDisplay{
+
+        }
+
+        #team1ScorePanelDisplay{
+            background-color: blue;
+        }
+
+        #team2ScorePanelDisplay{
+            background-color: red;
+        }
+
+        #team1NameDisplay, #team1Score_current,#team2NameDisplay, #team2Score_current{
+            font-size: 125%;
+            overflow:hidden;
+            text-overflow:ellipsis
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+
+            <!-- Display tournament name -->
+            <div class="col-xs-12 col-md-12" id="tournamentNameDisplay">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+
+            <!-- Display court -->
+            <div class="col-xs-12 col-md-12" id="courtDisplay">
+                <img src="badmintoncourt.png" alt="badmintoncourt" class="img-responsive">
+            </div>
+
+            <div class="col-xs-12 col-md-12" id="scorePanelDisplay">
+                <div class="col-xs-12 col-md-6 col-md-push-3">
+                    <div id="currentGameDisplay">Game 1</div>
+                    <div id="gameTimerDisplay">00:00:00</div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" id="playButton" onclick="timerSystem()" disabled><i class="material-icons" style="font-size:100%">play_arrow</i> Play</button>
+                        <!--                            <button type="button" class="btn btn-default" id="startNewMatchButton" data-toggle="modal" data-target="#popUpWindow"><i class="material-icons" style="font-size:100%">power_settings_new</i> Start New Match</button>-->
+                        <button type="button" class="btn btn-default" id="stopButton" disabled><i class="material-icons" style="font-size:100%">stop</i> Stop</button>
+                        <button type="button" class="btn btn-default" id="undoButton" disabled><i class="material-icons" style="font-size:90%">undo</i> Undo</button>
+                    </div>
+                </div>
+
+                <div class="col-xs-6 col-md-3 col-md-pull-6" id="team1ScorePanelDisplay">
+                    <div id="team1NameDisplay">aaaaaaaaaaaaaaaaaaaa</div>
+                    <div id="team1Score_current">0</div>
+                    <button type="button" class="btn btn-default" id="team1AddScoreButton" disabled>
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Point
+                    </button>
+                </div>
+
+                <div class="col-xs-6 col-md-3" id="team2ScorePanelDisplay">
+                    <div id="team2NameDisplay">aaaaaaaaaaaaaaaaaaaa</div>
+                    <div id="team2Score_current">0</div>
+                    <button type="button" class="btn btn-default" id="team2AddScoreButton" disabled>
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Point
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

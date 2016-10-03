@@ -1,619 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Match Season LiveScore</title>
+<head>
+    <meta charset="UTF-8">
+    <title>MatchSeason LiveScore</title>
 
-        <!--Bootstrap-->
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-        <!-- Google icons -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Google icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-        <style>
-            body {
-                background-image: url("background_3.jpg");
-            }
+    <style>
+        body{
+            background-image: url("court.png");
+            background-size: 100%;
+        }
 
-            #tournamentNameDisplay{
-                background-color: black;
-                border: 1px solid #404040;
-                color: white;
-                font-size: 300%;
-                font-family: Arial, sans-serif;
-                text-align: center;
-                margin-top:1%;
-                margin-bottom:1%;
-            }
+        nav{
+            box-shadow: 3px 3px 20px #888888;
+        }
 
-            #court{
-                margin-bottom:1%;
-            }
+        div{
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
 
-            #scoreTeam1_current, #scoreTeam2_current{
-                font-family: "Courier New", Courier, monospace;
-                font-size: 150%;
-                color: white;
-            }
+        .navbar-header{
+            margin:0;
+            float:none;
+            text-align: center;
+        }
 
-            #scoreTeam1_gameOne, #scoreTeam1_gameTwo, #scoreTeam1_gameThree, #scoreTeam2_gameOne, #scoreTeam2_gameTwo, #scoreTeam2_gameThree{
-                font-size: 250%;
-                color: white;
-                text-align: center;
-                font-family: "Courier New", Courier, monospace;
-            }
+        #tournamentNameDisplay{
+            background-color: white;
+            border: 1px solid grey;
+            border-radius: 10px;
+            color: grey;
+            font-size: 300%;
+            font-family: Verdana, Geneva, sans-serif;
+            font-weight: bold;
+            text-shadow: 1px 1px 5px grey;
+            text-align: center;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            box-shadow: 1px 1px 5px #888888;
+        }
 
-            #resultTableHeader{
-                background-color: #303030;
-                border-top: 5px solid deepskyblue;
-                border-left: 1px solid #404040;
-                border-right: 1px solid #404040;
-                border-bottom: 1px solid #404040;
-                margin-top:1%;
-                color: white;
-                font-size: 150%;
-                padding-top: 1%;
-            }
+        #team1Display, #team2Display{
+            border: 1px solid grey;
+            border-radius: 10px;
+            color: white;
+            font-family: Verdana, Geneva, sans-serif;
+            text-shadow: 1px 1px 5px black;
+            text-align: center;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
 
-            #resultTablePlayer, #resultTableScore{
-                background-color: black;
-                border: 1px solid #404040;
-                margin-bottom:1%;
-                color: white;
-                padding-top: 1%;
-            }
-        </style>
+        #player1NameDisplay, #player2NameDisplay, #player3NameDisplay, #player4NameDisplay {
+            font-weight: bold;
+            font-size: 200%;
+        }
 
-    </head>
-    <body>
-<!--        <nav class="navbar navbar-default">
-            <div class="container">
+        #team1NameDisplay, #team2NameDisplay{
+            font-size: 150%;
+        }
 
-                <div class="navbar-header">
-                    <a href="#" class="navbar-brand">ABC</a>
-                </div>
+        #currentGameScoreDisplay{
+            border: 1px solid grey;
+            border-radius: 10px;
+            color: white;
+            font-family: Verdana, Geneva, sans-serif;
+            text-align: center;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
 
-                <div>
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
+        #team1ScoreDisplay, #team2ScoreDisplay{
+            font-weight: bold;
+            font-size: 500%;
+            text-shadow: 1px 1px 5px black;
+        }
 
-            </div>
-        </nav>-->
-        <div class="modal fade" id="popUpWindow">
-            <div class="modal-dialog">
-                <div class="modal-content">
 
-                    <!-- header -->
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="modal-title">Match Info</h3>
-                    </div>
+        #currentGameNumberDisplay, #matchResultDisplay{
+            background-color: white;
+            border: 1px solid lightgrey;
+            border-radius: 10px 10px 0px 0px;
+            color: darkgrey;
+            font-size: 110%;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            padding: 10px;
+            box-shadow: 1px 1px 5px #888888;
+        }
 
-                    <!-- body (form) -->
-                    <div class="modal-body">
-                        <form role="form">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="tournamentNameInput" placeholder="Tournament Name" maxlength="40">
-                            </div>
+        #currentGameTimerDisplay, #matchScoreDisplay{
+            background-color: white;
+            border-bottom: 1px solid lightgrey;
+            border-left: 1px solid lightgrey;
+            border-right: 1px solid lightgrey;
+            border-radius: 0px 0px 10px 10px;
+            color: lightgrey;
+            font-size: 120%;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            padding: 10px;
+            box-shadow: 1px 1px 5px #888888;
+        }
 
-                           <!-- <div class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events Type <span class="caret"></span></a>
-                                <ul class="dropdown-menu" id="myid">
-                                   <!-- <li><a href="#" onclick="clickSingles()">Men's Singles</a></li>
-                                    <li><a href="#" onclick="clickDoubles()">Men's Doubles</a></li>
-                                    <li><a href="#" onclick="clickSingles()">Women's Singles</a></li>
-                                    <li><a href="#" onclick="clickDoubles()">Women's Doubles</a></li>
-                                    <li><a href="#" onclick="clickDoubles()">Mixed Doubles</a></li>
-                                    <li><a href="#">Men's Singles</a></li>
-                                    <li><a href="#">Men's Singles</a></li>
-                                </ul>
-                            </div>
+        #panelDisplay{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
 
-                            <div class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Scoring System <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">3 &times 21</a></li>
-                                    <li><a href="#">3 &times 15</a></li>
-                                </ul>
-                            </div>-->
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-default">
 
-                            Team 1
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="team1NameInput" placeholder="Team Name" maxlength="20">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="player1NameInput" placeholder="Player 1's Name" maxlength="40">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="player2NameInput" placeholder="Player 2's Name" maxlength="40">
-                            </div>
-                            Team 2
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="team2NameInput" placeholder="Team Name" maxlength="20">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="player3NameInput" placeholder="Player 3's Name" maxlength="40">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="player4NameInput" placeholder="Player 4's Name" maxlength="40">
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- button -->
-                    <div class="modal-footer">
-                        <button class="btn btn-primary btn-block" data-dismiss="modal" id="submitInputButton">Submit</button>
-                    </div>
-
-                </div>
-            </div>
+        <!-- Logo -->
+        <div class="navbar-header">
+            <a href="http://www.matchseason.com"><img src="logo.png" alt="MatchSeason" /></a>
         </div>
 
-        <div class="container">
-            <div class="row">
+            <!--
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>-->
+    </nav>
 
-                <div class="col-md-12" id="tournamentNameDisplay"></div>
+    <!-- Page Content -->
+    <div class="container" id="pageContentDisplay">
+        <div class="row">
 
-                <div class="col-md-12" id="court">
-                    <img src="badmintoncourt.png" alt="badmintoncourt" class="img-responsive">
+            <!-- Tournament -->
+            <div class="col-xs-12 col-md-12" id="tournamentNameDisplay">MALAYSIA OPEN 2016</div>
+
+            <!-- Team 1 -->
+            <div class="col-xs-5 col-md-5" id="team1Display">
+
+                <!-- Player 1 -->
+                <div class="col-xs-12 col-md-12" id="player1Display">
+                    <div class="col-xs-12 col-md-12" id="player1NameDisplay">Robin Ong</div>
                 </div>
 
+                <!-- Team 1 Name -->
+                <div class="col-xs-12 col-md-12" id="team1NameDisplay">(Malaysia)</div>
 
-
-
-                <div class="col-md-12" style="background-color: black; text-align:center; color: white;">
-                    <div class="col-md-3" style="background-color: black;">
-                        <h3 id="team1NameDisplay"></h3>
-                        <p id="scoreTeam1_current">0</p>
-                        <button type="button" class="btn btn-default" id="team1AddScoreButton" disabled>
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Point
-                        </button>
-                    </div>
-                    <div class="col-md-6" style="background-color: black">
-                        <h3 id="currentGameDisplay">Game 1</h3>
-                        <h4 id="gameTimerDisplay"></h4>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default" id="playButton" onclick="timerSystem()" disabled><i class="material-icons" style="font-size:100%">play_arrow</i> Play</button>
-<!--                            <button type="button" class="btn btn-default" id="startNewMatchButton" data-toggle="modal" data-target="#popUpWindow"><i class="material-icons" style="font-size:100%">power_settings_new</i> Start New Match</button>-->
-                            <button type="button" class="btn btn-default" id="stopButton" disabled><i class="material-icons" style="font-size:100%">stop</i> Stop</button>
-                            <button type="button" class="btn btn-default" id="undoButton" disabled><i class="material-icons" style="font-size:90%">undo</i> Undo</button>
-                        </div>
-                    </div>
-                    <div class="col-md-3" style="background-color: black">
-                        <h3 id="team2NameDisplay"></h3>
-                        <p id="scoreTeam2_current">0</p>
-                        <button type="button" class="btn btn-default" id="team2AddScoreButton" disabled>
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Point
-                        </button>
-                    </div>
+                <!-- Player 3 -->
+                <div class="col-xs-12 col-md-12" id="player3Display">
+                    <div class="col-xs-12 col-md-12" id="player3NameDisplay">Robin Ong</div>
                 </div>
-
-
-
-
-
-
-                <!--                <div class="col-md-12" id="resultTable">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                           <h2 class="teamName" id="teamAlfa">Team Alfa</h2>
-                            <div class="col-md-9">
-                                <p class="teamPlayer" id="playerAlfa" style="color:white;">Player Alfa</p>
-                                <p class="teamPlayer" id="playerBravo" style="color:white;">Player Bravo</p>
-                            </div>
-                            <div class="col-md-3">
-                                <p class="col-md-4" id="scoreAlfa_gameOne">0</p>
-                                <p class="col-md-4" id="scoreAlfa_gameTwo">0</p>
-                                <p class="col-md-4" id="scoreAlfa_gameThree">0</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="row">
-                           <h2 class="teamName" id="teamZulu">Team Zulu</h2>
-                            <div class="col-md-9">
-                                <p class="teamPlayer" id="playerZulu" style="color:white;">Player Zulu</p>
-                                <p class="teamPlayer" id="playerYankee" style="color:white;">Player Yankee</p>
-                            </div>
-                            <div class="col-md-3">
-                                <p class="col-md-2 col-md-offset-2" id="scoreZulu_gameOne">0</p>
-                                <p class="col-md-2 col-md-offset-2" id="scoreZulu_gameTwo">0</p>
-                                <p class="col-md-2 col-md-offset-2" id="scoreZulu_gameThree">0</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
-
-
-
-
-                <div class="col-md-12" id="resultTable">
-                    <div class="col-md-12" id="resultTableHeader">
-                        <div class="col-md-6">Men Doubles - Quarterfinals</div>
-                        <p class="col-md-2" style="text-align: center">Game 1</p>
-                        <p class="col-md-2" style="text-align: center">Game 2</p>
-                        <p class="col-md-2" style="text-align: center">Game 3</p>
-                    </div>
-
-
-                    <div class="col-md-6" id="resultTablePlayer">
-                        <p class="teamPlayer" id="player1Display"></p>
-                        <p class="teamPlayer" id="player2Display"></p>
-                        <p class="teamPlayer" id="player3Display"></p>
-                        <p class="teamPlayer" id="player4Display"></p>
-                    </div>
-                    <div class="col-md-6" id="resultTableScore">
-                        <p class="col-md-4" id="scoreTeam1_gameOne">0</p>
-                        <p class="col-md-4" id="scoreTeam1_gameTwo">0</p>
-                        <p class="col-md-4" id="scoreTeam1_gameThree">0</p>
-                        <p class="col-md-4" id="scoreTeam2_gameOne">0</p>
-                        <p class="col-md-4" id="scoreTeam2_gameTwo">0</p>
-                        <p class="col-md-4" id="scoreTeam2_gameThree">0</p>
-                    </div>
-                </div>
-
-
-
-
-                <div class="col-md-12" style="background-color: black">
-                <p id="notificationTest"></p>
-                <p id="test1"></p>
-                <p id="test2"></p>
-                <p id="test3"></p>
-                <p id="test4"></p>
-                <p id="test5"></p>
-                <p id="test6"></p>
-                    </div>
-
-
             </div>
+
+            <!-- Team 2 -->
+            <div class="col-xs-5 col-xs-offset-2 col-md-5 col-md-offset-2" id="team2Display">
+
+                <!-- Player 2 -->
+                <div class="col-xs-12 col-md-12" id="player2Display">
+                    <div class="col-xs-12 col-md-12" id="player2NameDisplay">Robin Ong</div>
+                </div>
+
+                <!-- Team 2 Name -->
+                <div class="col-xs-12 col-md-12" id="team2NameDisplay">(Malaysia)aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+
+                <!-- Player 4 -->
+                <div class="col-xs-12 col-md-12" id="player4Display">
+                    <div class="col-xs-12 col-md-12" id="player4NameDisplay">Robin Ong</div>
+                </div>
+            </div>
+
+            <!-- Current Game Result -->
+            <div class="col-xs-12 col-md-12" id="currentGameScoreDisplay">
+
+                <!-- Team 1 Score -->
+                <div class="col-xs-4 col-md-5" id="team1ScoreDisplay">0</div>
+
+                <!-- Current Game -->
+                <div class="col-xs-4 col-md-2">
+                    <div class="col-xs-12 col-md-12" id="currentGameNumberDisplay" style="margin-bottom: 0">GAME 1</div>
+                    <div class="col-xs-12 col-md-12" id="currentGameTimerDisplay" style="margin-top: 0">00 : 00 : 00</div>
+                </div>
+
+                <!-- Team 2 Score -->
+                <div class="col-xs-4 col-md-5" id="team2ScoreDisplay">0</div>
+            </div>
+
+            <!-- Button Panel-->
+            <div class="col-xs-12 col-md-12" id="panelDisplay">
+
+                <!-- Team 1 Add Point Button -->
+                <div class="col-xs-3 col-md-4">
+                    <button type="button" class="btn btn-default" id="team1AddScoreButton" disabled><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Point</button>
+                </div>
+
+                <!-- Control Panel Button -->
+                <div class="col-xs-6 col-md-4">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" id="playButton" disabled><i class="material-icons" style="font-size:100%">play_arrow</i> Play</button>
+                        <button type="button" class="btn btn-default" id="stopButton" disabled><i class="material-icons" style="font-size:100%">stop</i> Stop</button>
+                        <button type="button" class="btn btn-default" id="undoButton" disabled><i class="material-icons" style="font-size:100%">undo</i> Undo</button>
+                    </div>
+                </div>
+
+                <!-- Team 2 Add Point Button -->
+                <div class="col-xs-3 col-md-4">
+                    <button type="button" class="btn btn-default" id="team2AddScoreButton" disabled><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Point</button>
+                </div>
+            </div>
+
+            <!-- Match Result -->
+            <div class="col-xs-4 col-xs-offset-4 col-md-2 col-md-offset-5">
+
+                <!-- Match Result Header -->
+                <div class="col-xs-12 col-md-12" id="matchResultDisplay" style="margin-bottom: 0">MATCH RESULT</div>
+
+                <!-- Match Score -->
+                <div class="col-xs-12 col-md-12" id="matchScoreDisplay" style="margin-top: 0">
+                    <div class="col-xs-12 col-md-12">21 - 13</div>
+                    <div class="col-xs-12 col-md-12">&nbsp;&nbsp;3 - 21</div>
+                    <div class="col-xs-12 col-md-12">21 - 3&nbsp;&nbsp;</div>
+                </div>
+            </div>
+            
         </div>
-    </body>
-    <script>
-        $(window).load(function(){
-            $('#popUpWindow').modal('show');
-        });
-
-        $("#submitInputButton").click(function() {
-            var tournamentName = document.getElementById("tournamentNameInput").value;
-            var team1Name = document.getElementById("team1NameInput").value;
-            var player1Name = document.getElementById("player1NameInput").value;
-            var player2Name = document.getElementById("player2NameInput").value;
-            var team2Name = document.getElementById("team2NameInput").value;
-            var player3Name = document.getElementById("player3NameInput").value;
-            var player4Name = document.getElementById("player4NameInput").value;
-
-            if (tournamentName=="" || team1Name=="" || player1Name=="" || player2Name=="" || team2Name=="" || player3Name=="" || player4Name==""){
-                return false;
-            }else{
-                displayInput(tournamentName, team1Name, player1Name, player2Name, team2Name, player3Name, player4Name);
-                document.getElementById("playButton").disabled = false;
-//EDIT               scoringSystem();
-                return true;
-            }
-        });
-
-        function displayInput(tournament, team1, player1, player2, team2, player3, player4){
-            document.getElementById("tournamentNameDisplay").innerHTML = tournament;
-            document.getElementById("team1NameDisplay").innerHTML = team1;
-            document.getElementById("team2NameDisplay").innerHTML = team2;
-            document.getElementById("player1Display").innerHTML = player1 + "(" + team1 + ")";
-            document.getElementById("player2Display").innerHTML = player2 + "(" + team1 + ")";
-            document.getElementById("player3Display").innerHTML = player3 + "(" + team2 + ")";
-            document.getElementById("player4Display").innerHTML = player4 + "(" + team2 + ")";
-        }
-
-        function scoringSystem(){
-            var maxScore = 30;
-            var winScore = 21;
-            var deuceScore = 20;
-            var scoreTeam1 = 0;
-            var scoreTeam2 = 0;
-            var game = 1;
-            var gameTeam1 = 0;
-            var gameTeam2 = 0;
-            var scoreTeam1Array_gameOne = ["0"];
-            var scoreTeam2Array_gameOne = ["0"];
-            var scoreTeam1Array_gameTwo = ["0"];
-            var scoreTeam2Array_gameTwo = ["0"];
-            var scoreTeam1Array_gameThree = ["0"];
-            var scoreTeam2Array_gameThree = ["0"];
-
-            //Enable and disable appropriate buttons
-
-            document.getElementById("playButton").disabled = true;
-            document.getElementById("stopButton").disabled = false;
-            document.getElementById("team1AddScoreButton").disabled = false;
-            document.getElementById("team2AddScoreButton").disabled = false;
-
-            document.getElementById("team1AddScoreButton").onclick = function(){
-                scoreTeam1++;
-
-                //Enable undo button
-                if (game == 1 && scoreTeam1 == 1){
-                    document.getElementById("undoButton").disabled = false;
-                }
-
-                //Add score
-                if (scoreTeam1 <= winScore){
-                    switch (game){
-                        case 1:
-                            scoreTeam1Array_gameOne.push(scoreTeam1.toString());
-                            scoreTeam2Array_gameOne.push(scoreTeam2.toString());
-                            document.getElementById("scoreTeam1_gameOne").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                            break;
-                        case 2:
-                            scoreTeam1Array_gameTwo.push(scoreTeam1.toString());
-                            scoreTeam2Array_gameTwo.push(scoreTeam2.toString());
-                            document.getElementById("scoreTeam1_gameTwo").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                            break;
-                        case 3:
-                            scoreTeam1Array_gameThree.push(scoreTeam1.toString());
-                            scoreTeam2Array_gameThree.push(scoreTeam2.toString());
-                            document.getElementById("scoreTeam1_gameThree").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                            break;
-                        default:
-                            alert("Something is wrong with team1AddScoreButton");
-                    }
-                }
-
-                //Deuce happen
-                if (scoreTeam1==deuceScore && scoreTeam2==deuceScore){
-                    winScore++;
-                    deuceScore++;
-                }
-
-                //Game won
-                if (scoreTeam1==winScore) {
-                    game++;
-                    gameTeam1++;
-                    scoreTeam1 = 0;
-                    scoreTeam2 = 0;
-                    document.getElementById("currentGameDisplay").innerHTML = "Game " + game;
-                    switch (game){
-                        case 2:
-                            document.getElementById("notificationTest").innerHTML ="Game 1 won by Team 1";             ////////edit
-                            document.getElementById("scoreTeam1_gameTwo").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam2_gameTwo").innerHTML = scoreTeam2.toString();
-                            document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            break;
-                        case 3:
-                            if (gameTeam1 == 1 && gameTeam2 == 1){
-                                document.getElementById("notificationTest").innerHTML ="Game 2 won by Team 1";          ////edit
-                                document.getElementById("scoreTeam1_gameThree").innerHTML = scoreTeam1.toString();
-                                document.getElementById("scoreTeam2_gameThree").innerHTML = scoreTeam2.toString();
-                                document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                                document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            }else{
-                                document.getElementById("notificationTest").innerHTML ="Match won by Team 1";
-                            }
-                            break;
-                        case 4:
-                            document.getElementById("notificationTest").innerHTML ="Match won by Team 1";
-                            break;
-                        default:
-                            alert("Something is wrong with team1AddScoreButton");
-                    }
-                }
-            }
-
-            document.getElementById("team2AddScoreButton").onclick = function(){
-                scoreTeam2++;
-
-                //Enable undo button
-                if (game == 1 && scoreTeam2 == 1){
-                    document.getElementById("undoButton").disabled = false;
-                }
-
-                //Add score
-                if (scoreTeam2 <= winScore){
-                    switch (game){
-                        case 1:
-                            scoreTeam1Array_gameOne.push(scoreTeam1.toString());
-                            scoreTeam2Array_gameOne.push(scoreTeam2.toString());
-                            document.getElementById("scoreTeam2_gameOne").innerHTML = scoreTeam2.toString();
-                            document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            break;
-                        case 2:
-                            scoreTeam1Array_gameTwo.push(scoreTeam1.toString());
-                            scoreTeam2Array_gameTwo.push(scoreTeam2.toString());
-                            document.getElementById("scoreTeam2_gameTwo").innerHTML = scoreTeam2.toString();
-                            document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            break;
-                        case 3:
-                            scoreTeam1Array_gameThree.push(scoreTeam1.toString());
-                            scoreTeam2Array_gameThree.push(scoreTeam2.toString());
-                            document.getElementById("scoreTeam2_gameThree").innerHTML = scoreTeam2.toString();
-                            document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            break;
-                        default:
-                            alert("Something is wrong with team2AddScoreButton");
-                    }
-                }
-
-                //Deuce happen
-                if (scoreTeam1==deuceScore && scoreTeam2==deuceScore && winScore!=maxScore){
-                    winScore++;
-                    deuceScore++;
-                }
-
-                //Game won
-                if (scoreTeam2 == winScore) {
-                    game++;
-                    gameTeam2++;
-                    scoreTeam1 = 0;
-                    scoreTeam2 = 0;
-                    document.getElementById("currentGameDisplay").innerHTML = "Game " + game;
-                    switch (game){
-                        case 2:
-                            document.getElementById("notificationTest").innerHTML ="Game 1 won by Team 2";
-                            document.getElementById("scoreTeam1_gameTwo").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam2_gameTwo").innerHTML = scoreTeam2.toString();
-                            document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            break;
-                        case 3:
-                            if (gameTeam1 == 1 && gameTeam2 == 1){
-                                document.getElementById("notificationTest").innerHTML ="Game 2 won by Team 2";
-                                document.getElementById("scoreTeam1_gameThree").innerHTML = scoreTeam1.toString();
-                                document.getElementById("scoreTeam2_gameThree").innerHTML = scoreTeam2.toString();
-                                document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                                document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            }else{
-                                document.getElementById("notificationTest").innerHTML ="Match won by Team 2";
-                            }
-                            break;
-                        case 4:
-                            document.getElementById("notificationTest").innerHTML ="Match won by Team 2";
-                            break;
-                        default:
-                            alert("Something is wrong with team2AddScoreButton");
-                    }
-                }
-            }
-
-            document.getElementById("undoButton").onclick = function(){
-                switch (game){
-                    case 1:
-                        if ((scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length-1]==1 && scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length-1]==0) || (scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length-1]==0 && scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length-1]==1)){
-                            scoreTeam1Array_gameOne.pop();
-                            scoreTeam2Array_gameOne.pop();
-                            scoreTeam1 = scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length - 1];
-                            scoreTeam2 = scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length - 1];
-                            document.getElementById("scoreTeam1_gameOne").innerHTML = scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length - 1];
-                            document.getElementById("scoreTeam2_gameOne").innerHTML = scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length - 1];
-                            document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            document.getElementById("undoButton").disabled = true;
-                            break;
-                        }else{
-                            scoreTeam1Array_gameOne.pop();
-                            scoreTeam2Array_gameOne.pop();
-                            scoreTeam1 = scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length - 1];
-                            scoreTeam2 = scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length - 1];
-                            document.getElementById("scoreTeam1_gameOne").innerHTML = scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length - 1];
-                            document.getElementById("scoreTeam2_gameOne").innerHTML = scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length - 1];
-                            document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            break;
-                        }
-                    case 2:
-                        if (scoreTeam1Array_gameTwo[scoreTeam1Array_gameTwo.length-1]==0 && scoreTeam2Array_gameTwo[scoreTeam2Array_gameTwo.length-1]==0){
-                            game--;
-                            scoreTeam1Array_gameOne.pop();
-                            scoreTeam2Array_gameOne.pop();
-                            scoreTeam1 = scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length - 1];
-                            scoreTeam2 = scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length - 1];
-                            document.getElementById("scoreTeam1_gameOne").innerHTML = scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length - 1];
-                            document.getElementById("scoreTeam2_gameOne").innerHTML = scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length - 1];
-                            scoreTeam1Array_gameTwo = ["0"];
-                            scoreTeam2Array_gameTwo = ["0"];
-                            document.getElementById("scoreTeam1_gameTwo").innerHTML = scoreTeam1Array_gameTwo[scoreTeam1Array_gameTwo.length-1];
-                            document.getElementById("scoreTeam2_gameTwo").innerHTML = scoreTeam2Array_gameTwo[scoreTeam2Array_gameTwo.length-1];
-                            document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            break;
-                        }else {
-                            scoreTeam1Array_gameTwo.pop();
-                            scoreTeam2Array_gameTwo.pop();
-                            scoreTeam1 = scoreTeam1Array_gameTwo[scoreTeam1Array_gameTwo.length-1];
-                            scoreTeam2 = scoreTeam2Array_gameTwo[scoreTeam2Array_gameTwo.length-1];
-                            document.getElementById("scoreTeam1_gameTwo").innerHTML = scoreTeam1Array_gameTwo[scoreTeam1Array_gameTwo.length - 1];
-                            document.getElementById("scoreTeam2_gameTwo").innerHTML = scoreTeam2Array_gameTwo[scoreTeam2Array_gameTwo.length - 1];
-                            document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            break;
-                        }
-                    case 3:
-                        if (scoreTeam1Array_gameThree[scorTeam1Array_gameThree.length-1]==0 && scoreTeam2Array_gameThree[scoreTeam2Array_gameThree.length-1]==0){
-                            game--;
-                            scoreTeam1Array_gameTwo.pop();
-                            scoreTeam2Array_gameTwo.pop();
-                            scoreTeam1 = scoreTeam1Array_gameTwo[scoreTeam1Array_gameTwo.length - 1];
-                            scoreTeam2 = scoreTeam2Array_gameTwo[scoreTeam2Array_gameTwo.length - 1];
-                            document.getElementById("scoreTeam1_gameTwo").innerHTML = scoreTeam1Array_gameTwo[scoreTeam1Array_gameTwo.length - 1];
-                            document.getElementById("scoreTeam2_gameTwo").innerHTML = scoreTeam2Array_gameTwo[scoreTeam2Array_gameTwo.length - 1];
-                            scoreTeam1Array_gameThree = ["0"];
-                            scoreTeam2Array_gameThree = ["0"];
-                            document.getElementById("scoreTeam1_gameThree").innerHTML = scoreTeam1Array_gameThree[scoreTeam1Array_gameThree.length-1];
-                            document.getElementById("scoreTeam2_gameThree").innerHTML = scoreTeam2Array_gameThree[scoreTeam2Array_gameThree.length-1];
-                            document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            break;
-                        }else {
-                            scoreTeam1Array_gameThree.pop();
-                            scoreTeam2Array_gameThree.pop();
-                            scoreTeam1 = scoreTeam1Array_gameThree[scoreTeam1Array_gameThree.length-1];
-                            scoreTeam2 = scoreTeam2Array_gameThree[scoreTeam2Array_gameThree.length-1];
-                            document.getElementById("scoreTeam1_gameThree").innerHTML = scoreTeam1Array_gameThree[scoreTeam1Array_gameThree.length-1];
-                            document.getElementById("scoreTeam2_gameThree").innerHTML = scoreTeam2Array_gameThree[scoreTeam2Array_gameThree.length-1];
-                            document.getElementById("scoreTeam1_current").innerHTML = scoreTeam1.toString();
-                            document.getElementById("scoreTeam2_current").innerHTML = scoreTeam2.toString();
-                            break;
-                        }
-                    default:
-                        alert("Something is wrong with undoButton");
-                }
-            }
-        }
-
-        function timerSystem(){
-            var startDate = new Date();
-            var hour = 0;
-            var minute = 0;
-            var second = 0;
-
-            scoringSystem();
-            var matchTimer = setInterval(function(){ clockTimer() }, 1000);
-
-            function clockTimer(){
-                second++;
-
-                if (second == 60){
-                    minute++;
-                    second = 0;
-                }
-
-                if (minute == 60){
-                    hour++;
-                    minute = 0;
-                }
-
-                displayTimer(hour,minute,second);
-            }
-
-            document.getElementById("stopButton").onclick = function(){
-                clearInterval(matchTimer);
-                var endDate = new Date();
-            }
-        }
-
-        function displayTimer(hr,min,sec){
-            var hrTenth = Math.floor(hr/10);
-            var minTenth = Math.floor(min/10);
-            var secTenth = Math.floor(sec/10);
-
-            while (hr>9){
-                hr = hr-10;
-            }
-            while (min>9){
-                min = min-10;
-            }
-            while (sec>9){
-                sec = sec-10;
-            }
-            document.getElementById("gameTimerDisplay").innerHTML = hrTenth.toString() + hr.toString() + ":" + minTenth.toString() + min.toString() + ":" + secTenth.toString()+ sec.toString();
-        }
-    </script>
+    </div>
+</body>
 </html>
