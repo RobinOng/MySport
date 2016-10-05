@@ -37,13 +37,17 @@
             text-align: center;
         }
 
+        .modal-content{
+            font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        }
+
         #tournamentNameDisplay{
             background-color: white;
             border: 1px solid grey;
             border-radius: 10px;
             color: grey;
             font-size: 300%;
-            font-family: Verdana, Geneva, sans-serif;
+            font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
             font-weight: bold;
             text-shadow: 1px 1px 5px grey;
             text-align: center;
@@ -55,7 +59,7 @@
         #team1Display, #team2Display{
             border-radius: 10px;
             color: white;
-            font-family: Verdana, Geneva, sans-serif;
+            font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
             text-shadow: 1px 1px 5px black;
             text-align: center;
             overflow:hidden;
@@ -74,7 +78,7 @@
         #currentGameScoreDisplay{
             border-radius: 10px;
             color: white;
-            font-family: Verdana, Geneva, sans-serif;
+            font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
             text-align: center;
             overflow:hidden;
             text-overflow:ellipsis;
@@ -94,7 +98,7 @@
             color: darkgrey;
             font-size: 110%;
             font-weight: bold;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
             text-align: center;
             overflow:hidden;
             text-overflow:ellipsis;
@@ -111,7 +115,7 @@
             color: lightgrey;
             font-size: 120%;
             font-weight: bold;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
             text-align: center;
             overflow:hidden;
             text-overflow:ellipsis;
@@ -123,16 +127,14 @@
             text-align: center;
         }
 
-        #team1AddScoreButton, #team2AddScoreButton{
-            padding: 15px;
-        }
-
         .btn-group{
             box-shadow: 1px 1px 5px #888888;
         }
 
-        #playButton, #stopButton, #undoButton{
+        #team1AddScoreButton,#team2AddScoreButton,#playButton, #stopButton, #undoButton{
             padding: 15px;
+            font-weight: bold;
+            font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
         }
     </style>
 </head>
@@ -237,6 +239,7 @@
 
                 <!-- Player 1 -->
                 <div class="col-xs-12 col-md-12" id="player1Display">
+                    <div class="col-xs-12 col-md-12"><img src="profiletest4.jpg" alt="profilepicture" class="img-circle" style="height: 150px;border: 5px solid white; box-shadow: 0px 0px 10px black""></div>
                     <div class="col-xs-12 col-md-12" id="player1NameDisplay">Player 1</div>
                 </div>
 
@@ -246,6 +249,7 @@
                 <!-- Player 3 -->
                 <div class="col-xs-12 col-md-12" id="player3Display">
                     <div class="col-xs-12 col-md-12" id="player3NameDisplay">Player 3</div>
+                    <div class="col-xs-12 col-md-12"><img src="profiletest3.jpg" alt="profilepicture" class="img-circle" style="height: 150px;border: 5px solid white; box-shadow: 0px 0px 10px black"></div>
                 </div>
             </div>
 
@@ -254,6 +258,7 @@
 
                 <!-- Player 2 -->
                 <div class="col-xs-12 col-md-12" id="player2Display">
+                    <div class="col-xs-12 col-md-12"><img src="profiletest2.jpg" alt="profilepicture" class="img-circle" style="height: 150px;border: 5px solid white; box-shadow: 0px 0px 10px black""></div>
                     <div class="col-xs-12 col-md-12" id="player2NameDisplay">Player 2</div>
                 </div>
 
@@ -263,6 +268,7 @@
                 <!-- Player 4 -->
                 <div class="col-xs-12 col-md-12" id="player4Display">
                     <div class="col-xs-12 col-md-12" id="player4NameDisplay">Player 4</div>
+                    <div class="col-xs-12 col-md-12"><img src="profiletest1.jpg" alt="profilepicture" class="img-circle" style="height: 150px;border: 5px solid white; box-shadow: 0px 0px 10px black""></div>
                 </div>
             </div>
 
@@ -290,12 +296,13 @@
                     <button type="button" class="btn btn-default" id="team1AddScoreButton" disabled><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Point</button>
                 </div>
 
+
                 <!-- Control Panel Button -->
                 <div class="col-xs-6 col-md-4" id="controlPanelDisplay">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default" id="playButton" disabled><i class="material-icons" style="font-size:100%">play_arrow</i> Play</button>
-                        <button type="button" class="btn btn-default" id="stopButton" disabled><i class="material-icons" style="font-size:100%">stop</i> Stop</button>
-                        <button type="button" class="btn btn-default" id="undoButton" disabled><i class="material-icons" style="font-size:100%">undo</i> Undo</button>
+                        <button type="button" class="btn btn-default" id="playButton" disabled><i class="material-icons" id="playIcon" style="font-size:100%">play_arrow</i><div id="playButtonContent" style="display: inline-block;">&nbsp;Play</div></button>
+                        <button type="button" class="btn btn-default" id="stopButton" disabled><i class="material-icons" style="font-size:100%">stop</i><div style="display: inline-block;">&nbsp;Stop</div></button>
+                        <button type="button" class="btn btn-default" id="undoButton" disabled><i class="material-icons" style="font-size:100%">undo</i><div style="display: inline-block;">&nbsp;Undo</div></button>
                     </div>
                 </div>
 
@@ -371,23 +378,73 @@
     }
 
     // When Play button is clicked
+    var playButtonFlag = 0;
+    var matchTimer;
+    var second = 0;
+    var minute = 0;
+    var hour = 0;
     $("#playButton").click(function() {
 
-        // Enable and disable appropriate buttons
-        document.getElementById("playButton").disabled = true;
-        document.getElementById("stopButton").disabled = false;
+        if (playButtonFlag == 0) {
 
-        // Start scoring system
-        scoringSystem();
+            // Increase flag
+            playButtonFlag++;
 
-        // Get start time
-        var startDate = new Date();
+            // Enable and disable appropriate buttons
+            document.getElementById("stopButton").disabled = false;
 
-        // Start timer
-        var second = 0;
-        var minute = 0;
-        var hour = 0;
-        var matchTimer = setInterval(timer, 1000);
+            // Change Play button to Pause button
+            document.getElementById("playButtonContent").innerHTML = "&nbsp;Pause";
+            document.getElementById("playIcon").innerHTML = "pause";
+
+            // Restart game score display
+            document.getElementById("team1ScoreDisplay").innerHTML = "0";
+            document.getElementById("team2ScoreDisplay").innerHTML = "0";
+            document.getElementById("game1ScoreDisplay").innerHTML = "0&nbsp;&nbsp;-&nbsp;&nbsp;0";
+            document.getElementById("game2ScoreDisplay").innerHTML = "0&nbsp;&nbsp;-&nbsp;&nbsp;0";
+            document.getElementById("game3ScoreDisplay").innerHTML = "0&nbsp;&nbsp;-&nbsp;&nbsp;0";
+
+            // Start scoring system
+            scoringSystem();
+
+            // Get start time
+            var startDate = new Date();
+
+            // Start timer
+            matchTimer = setInterval(timer, 1000);
+
+        }else if ((playButtonFlag % 2) != 0){
+
+            // Increase flag
+            playButtonFlag++;
+
+            // Enable and disable appropriate buttons
+            document.getElementById("team1AddScoreButton").disabled = true;
+            document.getElementById("team2AddScoreButton").disabled = true;
+
+            // Change Pause button to Play button
+            document.getElementById("playButtonContent").innerHTML = "&nbsp;Play";
+            document.getElementById("playIcon").innerHTML = "play_arrow";
+
+            // Stop timer
+            clearInterval(matchTimer);
+
+        }else{
+
+            // Increase flag
+            playButtonFlag++;
+
+            // Enable and disable appropriate buttons
+            document.getElementById("team1AddScoreButton").disabled = false;
+            document.getElementById("team2AddScoreButton").disabled = false;
+
+            // Change Play button to Pause button
+            document.getElementById("playButtonContent").innerHTML = "&nbsp;Pause";
+            document.getElementById("playIcon").innerHTML = "pause";
+
+            // Start timer
+            matchTimer = setInterval(timer, 1000);
+        }
 
         // Timer
         function timer() {
@@ -418,6 +475,18 @@
             // Enable and disable appropriate buttons
             document.getElementById("playButton").disabled = false;
             document.getElementById("stopButton").disabled = true;
+            document.getElementById("team1AddScoreButton").disabled = true;
+            document.getElementById("team2AddScoreButton").disabled = true;
+
+            // Change Pause button to Play button
+            document.getElementById("playButtonContent").innerHTML = "&nbsp;Play";
+            document.getElementById("playIcon").innerHTML = "play_arrow";
+
+            // Restart everything
+            playButtonFlag = 0;
+            second = 0;
+            minute = 0;
+            hour = 0;
 
             // Stop timer
             clearInterval(matchTimer);
