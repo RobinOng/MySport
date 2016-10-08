@@ -131,7 +131,7 @@
             box-shadow: 1px 1px 5px #888888;
         }
 
-        #team1AddScoreButton,#team2AddScoreButton,#playButton, #stopButton, #undoButton{
+        #team1AddScoreButton,#team2AddScoreButton,#playButton, #stopButton, #undoButton, #settingButton{
             padding: 15px;
             font-weight: bold;
             font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -362,6 +362,7 @@
 
             // Enable and disable appropriate buttons
             document.getElementById("playButton").disabled = false;
+            scoringSystem();
             return true;
         }
     });
@@ -392,6 +393,8 @@
 
             // Enable and disable appropriate buttons
             document.getElementById("stopButton").disabled = false;
+            document.getElementById("team1AddScoreButton").disabled = false;
+            document.getElementById("team2AddScoreButton").disabled = false;
 
             // Change Play button to Pause button
             document.getElementById("playButtonContent").innerHTML = "&nbsp;Pause";
@@ -403,9 +406,6 @@
             document.getElementById("game1ScoreDisplay").innerHTML = "0&nbsp;&nbsp;-&nbsp;&nbsp;0";
             document.getElementById("game2ScoreDisplay").innerHTML = "0&nbsp;&nbsp;-&nbsp;&nbsp;0";
             document.getElementById("game3ScoreDisplay").innerHTML = "0&nbsp;&nbsp;-&nbsp;&nbsp;0";
-
-            // Start scoring system
-            scoringSystem();
 
             // Get start time
             var startDate = new Date();
@@ -478,15 +478,31 @@
             document.getElementById("team1AddScoreButton").disabled = true;
             document.getElementById("team2AddScoreButton").disabled = true;
 
+
             // Change Pause button to Play button
-            document.getElementById("playButtonContent").innerHTML = "&nbsp;Play";
-            document.getElementById("playIcon").innerHTML = "play_arrow";
+            document.getElementById("playButtonContent").innerHTML = "&nbsp;Rematch";
+            document.getElementById("playIcon").innerHTML = "replay";
 
             // Restart everything
             playButtonFlag = 0;
             second = 0;
             minute = 0;
             hour = 0;
+            maxScore = 30;
+            winScore = 21;
+            deuceScore = 20;
+            maxGame = 3;
+            scoreTeam1 = 0;
+            scoreTeam2 = 0;
+            game = 1;
+            gameTeam1 = 0;
+            gameTeam2 = 0;
+            scoreTeam1Array_gameOne = ["0"];
+            scoreTeam2Array_gameOne = ["0"];
+            scoreTeam1Array_gameTwo = ["0"];
+            scoreTeam2Array_gameTwo = ["0"];
+            scoreTeam1Array_gameThree = ["0"];
+            scoreTeam2Array_gameThree = ["0"];
 
             // Stop timer
             clearInterval(matchTimer);
@@ -519,30 +535,28 @@
         document.getElementById("currentGameTimerDisplay").innerHTML = hrTenth.toString() + hr.toString() + ":" + minTenth.toString() + min.toString() + ":" + secTenth.toString()+ sec.toString();
     }
 
+    // 21-points system
+    var maxScore = 30;
+    var winScore = 21;
+    var deuceScore = 20;
+    var maxGame = 3;
+    var winScoreArray = ["21"];
+    var deuceScoreArray = ["20"];
+
+    // Initial condition
+    var scoreTeam1 = 0;
+    var scoreTeam2 = 0;
+    var game = 1;
+    var gameTeam1 = 0;
+    var gameTeam2 = 0;
+    var scoreTeam1Array_gameOne = ["0"];
+    var scoreTeam2Array_gameOne = ["0"];
+    var scoreTeam1Array_gameTwo = ["0"];
+    var scoreTeam2Array_gameTwo = ["0"];
+    var scoreTeam1Array_gameThree = ["0"];
+    var scoreTeam2Array_gameThree = ["0"];
+
     function scoringSystem() {
-
-        // Enable and disable appropriate buttons
-        document.getElementById("team1AddScoreButton").disabled = false;
-        document.getElementById("team2AddScoreButton").disabled = false;
-
-        // 21-points system
-        var maxScore = 30;
-        var winScore = 21;
-        var deuceScore = 20;
-        var maxGame = 3;
-
-        //Initial condition
-        var scoreTeam1 = 0;
-        var scoreTeam2 = 0;
-        var game = 1;
-        var gameTeam1 = 0;
-        var gameTeam2 = 0;
-        var scoreTeam1Array_gameOne = ["0"];
-        var scoreTeam2Array_gameOne = ["0"];
-        var scoreTeam1Array_gameTwo = ["0"];
-        var scoreTeam2Array_gameTwo = ["0"];
-        var scoreTeam1Array_gameThree = ["0"];
-        var scoreTeam2Array_gameThree = ["0"];
 
         $("#team1AddScoreButton").click(function() {
             scoreTeam1++;
