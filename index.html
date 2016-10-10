@@ -131,7 +131,7 @@
             box-shadow: 1px 1px 5px #888888;
         }
 
-        #team1AddScoreButton,#team2AddScoreButton,#playButton, #stopButton, #undoButton, #settingButton{
+        #team1AddScoreButton,#team2AddScoreButton,#buttonOne, #stopButton, #undoButton{
             padding: 15px;
             font-weight: bold;
             font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -300,7 +300,7 @@
                 <!-- Control Panel Button -->
                 <div class="col-xs-6 col-md-4" id="controlPanelDisplay">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default" id="playButton" disabled><i class="material-icons" id="playIcon" style="font-size:100%">play_arrow</i><div id="playButtonContent" style="display: inline-block;">&nbsp;Play</div></button>
+                        <button type="button" class="btn btn-default" id="buttonOne" disabled><i class="material-icons" id="buttonOneIcon" style="font-size:100%">play_arrow</i><div id="buttonOneText" style="display: inline-block;">&nbsp;Play</div></button>
                         <button type="button" class="btn btn-default" id="stopButton" disabled><i class="material-icons" style="font-size:100%">stop</i><div style="display: inline-block;">&nbsp;Stop</div></button>
                         <button type="button" class="btn btn-default" id="undoButton" disabled><i class="material-icons" style="font-size:100%">undo</i><div style="display: inline-block;">&nbsp;Undo</div></button>
                     </div>
@@ -343,53 +343,121 @@
         keyboard: false
     });
 
+    var match = {
+        "tournamentInfo": {
+            "tournamentID": "",
+            "tournamentName": "",
+            "startDate": "",
+            "endDate": "",
+            "matchDuration": ""
+        },
+
+        "team1Info": {
+            "teamInfo": {
+                "teamID": "",
+                "teamName": ""
+            },
+            "player1Info": {
+                "playerID": "",
+                "playerName": ""
+            },
+            "player3Info": {
+                "playerID": "",
+                "playerName": ""
+            }
+        },
+
+        "team2Info": {
+            "teamInfo": {
+                "teamID": "",
+                "teamName": ""
+            },
+            "player2Info": {
+                "playerID": "",
+                "playerName": ""
+            },
+            "player4Info": {
+                "playerID": "",
+                "playerName": ""
+            }
+        },
+
+        "gameInfo": {
+            "gameOneInfo": {
+                "scoreInfo": {
+                    "team1Score" : ["0"],
+                    "team2Score" : ["0"]
+                },
+                "winningTeam": "",
+                "gameDuration": ""
+            },
+            "gameTwoInfo": {
+                "scoreInfo": {
+                    "team1Score" : ["0"],
+                    "team2Score" : ["0"]
+                },
+                "winningTeam": "",
+                "gameDuration": ""
+            },
+            "gameThreeInfo": {
+                "scoreInfo": {
+                    "team1Score" : ["0"],
+                    "team2Score" : ["0"]
+                },
+                "winningTeam": "",
+                "gameDuration": ""
+            }
+        }
+    };
+
     // When Submit button is clicked
     $("#submitInputButton").click(function() {
-        var tournamentName = document.getElementById("tournamentNameInput").value;
-        var team1Name = document.getElementById("team1NameInput").value;
-        var player1Name = document.getElementById("player1NameInput").value;
-        var player2Name = document.getElementById("player2NameInput").value;
-        var team2Name = document.getElementById("team2NameInput").value;
-        var player3Name = document.getElementById("player3NameInput").value;
-        var player4Name = document.getElementById("player4NameInput").value;
+        match.tournamentInfo.tournamentName = document.getElementById("tournamentNameInput").value;
+        match.team1Info.teamInfo.teamName = document.getElementById("team1NameInput").value;
+        match.team1Info.player1Info.playerName = document.getElementById("player1NameInput").value;
+        match.team1Info.player3Info.playerName = document.getElementById("player3NameInput").value;
+        match.team2Info.teamInfo.teamName = document.getElementById("team2NameInput").value;
+        match.team2Info.player2Info.playerName = document.getElementById("player2NameInput").value;
+        match.team2Info.player4Info.playerName = document.getElementById("player4NameInput").value;
 
         // Check if all Inputs are filled
-        if (tournamentName=="" || team1Name=="" || player1Name=="" || player2Name=="" || team2Name=="" || player3Name=="" || player4Name=="") {
+        if (match.tournamentInfo.tournamentName == "" || match.team1Info.teamInfo.teamName == "" || match.team1Info.player1Info.playerName == "" || match.team1Info.player3Info.playerName == "" || match.team2Info.teamInfo.teamName == "" || match.team2Info.player2Info.playerName == "" || match.team2Info.player4Info.playerName == "") {
             return false;
         } else {
             // Call function to display tournament and players name
-            displayInput(tournamentName, team1Name, player1Name, player2Name, team2Name, player3Name, player4Name);
+            displayInput(match.tournamentInfo.tournamentName, match.team1Info.teamInfo.teamName, match.team1Info.player1Info.playerName, match.team1Info.player3Info.playerName, match.team2Info.teamInfo.teamName, match.team2Info.player2Info.playerName, match.team2Info.player4Info.playerName);
 
             // Enable and disable appropriate buttons
-            document.getElementById("playButton").disabled = false;
-            scoringSystem();
+            document.getElementById("buttonOne").disabled = false;
             return true;
         }
     });
 
     // Display tournament and players name
-    function displayInput(tournament, team1, player1, player2, team2, player3, player4) {
-        document.getElementById("tournamentNameDisplay").innerHTML = tournament;
-        document.getElementById("team1NameDisplay").innerHTML = team1;
-        document.getElementById("team2NameDisplay").innerHTML = team2;
-        document.getElementById("player1NameDisplay").innerHTML = player1;
-        document.getElementById("player3NameDisplay").innerHTML = player3;
-        document.getElementById("player2NameDisplay").innerHTML = player2;
-        document.getElementById("player4NameDisplay").innerHTML = player4;
+    function displayInput(tournamentName, team1Name, player1Name, player3Name, team2Name, player2Name, player4Name) {
+        document.getElementById("tournamentNameDisplay").innerHTML = tournamentName;
+        document.getElementById("team1NameDisplay").innerHTML = team1Name;
+        document.getElementById("team2NameDisplay").innerHTML = team2Name;
+        document.getElementById("player1NameDisplay").innerHTML = player1Name;
+        document.getElementById("player3NameDisplay").innerHTML = player3Name;
+        document.getElementById("player2NameDisplay").innerHTML = player2Name;
+        document.getElementById("player4NameDisplay").innerHTML = player4Name;
     }
 
-    // When Play button is clicked
-    var playButtonFlag = 0;
-    var matchTimer;
+    // buttonOne is clicked (Play, Pause, Rematch)
+    var buttonOneFlag = 0;
+    var intervalCounter;
     var second = 0;
     var minute = 0;
     var hour = 0;
-    $("#playButton").click(function() {
 
-        if (playButtonFlag == 0) {
+    $("#buttonOne").click(function() {
+
+        // Play button is clicked to start match
+        if (buttonOneFlag == 0) {
 
             // Increase flag
-            playButtonFlag++;
+            buttonOneFlag++;
 
             // Enable and disable appropriate buttons
             document.getElementById("stopButton").disabled = false;
@@ -397,8 +465,8 @@
             document.getElementById("team2AddScoreButton").disabled = false;
 
             // Change Play button to Pause button
-            document.getElementById("playButtonContent").innerHTML = "&nbsp;Pause";
-            document.getElementById("playIcon").innerHTML = "pause";
+            document.getElementById("buttonOneText").innerHTML = "&nbsp;Pause";
+            document.getElementById("buttonOneIcon").innerHTML = "pause";
 
             // Restart game score display
             document.getElementById("team1ScoreDisplay").innerHTML = "0";
@@ -408,127 +476,112 @@
             document.getElementById("game3ScoreDisplay").innerHTML = "0&nbsp;&nbsp;-&nbsp;&nbsp;0";
 
             // Get start time
-            var startDate = new Date();
+            match.tournamentInfo.startDate = new Date();
 
             // Start timer
-            matchTimer = setInterval(timer, 1000);
+            intervalCounter = setInterval(matchTimer, 1000);
 
-        }else if ((playButtonFlag % 2) != 0){
+        // Pause button is clicked
+        }else if ((buttonOneFlag % 2) != 0){
 
             // Increase flag
-            playButtonFlag++;
+            buttonOneFlag++;
 
             // Enable and disable appropriate buttons
             document.getElementById("team1AddScoreButton").disabled = true;
             document.getElementById("team2AddScoreButton").disabled = true;
 
             // Change Pause button to Play button
-            document.getElementById("playButtonContent").innerHTML = "&nbsp;Play";
-            document.getElementById("playIcon").innerHTML = "play_arrow";
+            document.getElementById("buttonOneText").innerHTML = "&nbsp;Play";
+            document.getElementById("buttonOneIcon").innerHTML = "play_arrow";
 
-            // Stop timer
-            clearInterval(matchTimer);
+            // Pause timer
+            clearInterval(intervalCounter);
 
-        }else{
+        // Play button is clicked to unpause
+        }else {
 
             // Increase flag
-            playButtonFlag++;
+            buttonOneFlag++;
 
             // Enable and disable appropriate buttons
             document.getElementById("team1AddScoreButton").disabled = false;
             document.getElementById("team2AddScoreButton").disabled = false;
 
             // Change Play button to Pause button
-            document.getElementById("playButtonContent").innerHTML = "&nbsp;Pause";
-            document.getElementById("playIcon").innerHTML = "pause";
+            document.getElementById("buttonOneText").innerHTML = "&nbsp;Pause";
+            document.getElementById("buttonOneIcon").innerHTML = "pause";
 
             // Start timer
-            matchTimer = setInterval(timer, 1000);
-        }
-
-        // Timer
-        function timer() {
-
-            // Add Second every 1000 millisecond
-            second++;
-
-            // Add Minute every 60 seconds
-            if (second == 60) {
-                minute++;
-                second = 0;
-            }
-
-            // Add Hour every 60 minutes
-            if (minute == 60) {
-                hour++;
-                minute = 0;
-            }
-
-            // Call function to display timer
-            displayTimer(hour,minute,second);
-            return second,minute,hour;
+            intervalCounter = setInterval(matchTimer, 1000);
         }
 
         // When Stop button is clicked
         $("#stopButton").click(function() {
 
             // Enable and disable appropriate buttons
-            document.getElementById("playButton").disabled = false;
+            document.getElementById("buttonOne").disabled = false;
             document.getElementById("stopButton").disabled = true;
+            document.getElementById("undoButton").disabled = true;
             document.getElementById("team1AddScoreButton").disabled = true;
             document.getElementById("team2AddScoreButton").disabled = true;
 
 
-            // Change Pause button to Play button
-            document.getElementById("playButtonContent").innerHTML = "&nbsp;Rematch";
-            document.getElementById("playIcon").innerHTML = "replay";
+            // Change Pause button to Rematch button
+            document.getElementById("buttonOneText").innerHTML = "&nbsp;Rematch";
+            document.getElementById("buttonOneIcon").innerHTML = "replay";
 
             // Restart everything
-            playButtonFlag = 0;
-            second = 0;
-            minute = 0;
-            hour = 0;
-            maxScore = 30;
-            winScore = 21;
-            deuceScore = 20;
-            maxGame = 3;
-            scoreTeam1 = 0;
-            scoreTeam2 = 0;
-            game = 1;
-            gameTeam1 = 0;
-            gameTeam2 = 0;
-            scoreTeam1Array_gameOne = ["0"];
-            scoreTeam2Array_gameOne = ["0"];
-            scoreTeam1Array_gameTwo = ["0"];
-            scoreTeam2Array_gameTwo = ["0"];
-            scoreTeam1Array_gameThree = ["0"];
-            scoreTeam2Array_gameThree = ["0"];
+            resetAll();
 
             // Stop timer
-            clearInterval(matchTimer);
+            clearInterval(intervalCounter);
 
             // Get end time
-            var endDate = new Date();
+            match.tournamentInfo.endDate = new Date();
         });
     });
 
+    // Timer
+    function matchTimer() {
+
+        // Add Second every 1000 millisecond
+        second++;
+
+        // Add Minute every 60 seconds
+        if (second == 60) {
+            minute++;
+            second = 0;
+        }
+
+        // Add Hour every 60 minutes
+        if (minute == 60) {
+            hour++;
+            minute = 0;
+        }
+
+        // Call function to display timer
+        displayTimer(second,minute,hour);
+        return second,minute,hour;
+    }
+
     // Display timer
-    function displayTimer(hr,min,sec) {
+    function displayTimer(sec,min,hr) {
 
         // Get 2nd digit
-        var hrTenth = Math.floor(hr/10);
-        var minTenth = Math.floor(min/10);
         var secTenth = Math.floor(sec/10);
+        var minTenth = Math.floor(min/10);
+        var hrTenth = Math.floor(hr/10);
 
         // Get 1st digit
-        while (hr>9) {
-            hr = hr-10;
+        while (sec > 9) {
+            sec = sec-10;
         }
-        while (min>9) {
+        while (min > 9) {
             min = min-10;
         }
-        while (sec>9) {
-            sec = sec-10;
+        while (hr > 9) {
+            hr = hr-10;
         }
 
         // Display in HTML
@@ -540,297 +593,392 @@
     var winScore = 21;
     var deuceScore = 20;
     var maxGame = 3;
-    var winScoreArray = ["21"];
-    var deuceScoreArray = ["20"];
 
     // Initial condition
+    var game = 1;
     var scoreTeam1 = 0;
     var scoreTeam2 = 0;
-    var game = 1;
-    var gameTeam1 = 0;
-    var gameTeam2 = 0;
-    var scoreTeam1Array_gameOne = ["0"];
-    var scoreTeam2Array_gameOne = ["0"];
-    var scoreTeam1Array_gameTwo = ["0"];
-    var scoreTeam2Array_gameTwo = ["0"];
-    var scoreTeam1Array_gameThree = ["0"];
-    var scoreTeam2Array_gameThree = ["0"];
+    var winScoreArray_gameOne = ["21"];
+    var winScoreArray_gameTwo = ["21"];
+    var winScoreArray_gameThree = ["21"];
+    var deuceScoreArray_gameOne = ["20"];
+    var deuceScoreArray_gameTwo = ["20"];
+    var deuceScoreArray_gameThree = ["20"];
 
-    function scoringSystem() {
+    function resetAll(){
+        buttonOneFlag = 0;
+        second = 0;
+        minute = 0;
+        hour = 0;
+        maxScore = 30;
+        winScore = 21;
+        deuceScore = 20;
+        scoreTeam1 = 0;
+        scoreTeam2 = 0;
+        winScoreArray_gameOne = ["21"];
+        winScoreArray_gameTwo = ["21"];
+        winScoreArray_gameThree = ["21"];
+        deuceScoreArray_gameOne = ["20"];
+        deuceScoreArray_gameTwo = ["20"];
+        deuceScoreArray_gameThree = ["20"];
 
-        $("#team1AddScoreButton").click(function() {
-            scoreTeam1++;
+        match.tournamentInfo.startDate = "";
+        match.tournamentInfo.endDate = "";
+        match.tournamentInfo.matchDuration = "";
 
-            // Enable and disable appropriate buttons
-            if (game == 1 && scoreTeam1 == 1) {
-                document.getElementById("undoButton").disabled = false;
-            }
+        match.gameInfo.gameOneInfo.scoreInfo.team1Score = ["0"];
+        match.gameInfo.gameOneInfo.scoreInfo.team2Score = ["0"];
+        match.gameInfo.gameTwoInfo.scoreInfo.team1Score = ["0"];
+        match.gameInfo.gameTwoInfo.scoreInfo.team2Score = ["0"];
+        match.gameInfo.gameThreeInfo.scoreInfo.team1Score = ["0"];
+        match.gameInfo.gameThreeInfo.scoreInfo.team2Score = ["0"];
 
-            // Add score
-            if (scoreTeam1 <= winScore) {
-                switch (game) {
-                    case 1:
-                        scoreTeam1Array_gameOne.push(scoreTeam1.toString());
-                        scoreTeam2Array_gameOne.push(scoreTeam2.toString());
-                        break;
-                    case 2:
-                        scoreTeam1Array_gameTwo.push(scoreTeam1.toString());
-                        scoreTeam2Array_gameTwo.push(scoreTeam2.toString());
-                        break;
-                    case 3:
-                        scoreTeam1Array_gameThree.push(scoreTeam1.toString());
-                        scoreTeam2Array_gameThree.push(scoreTeam2.toString());
-                        break;
-                    default:
-                        alert("Something is wrong with team1AddScoreButton's AddScore function");
-                }
-                document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
-            }
+        match.gameInfo.gameOneInfo.winningTeam = "";
+        match.gameInfo.gameTwoInfo.winningTeam = "";
+        match.gameInfo.gameThreeInfo.winningTeam = "";
 
-            // Deuce happen
-            if (scoreTeam1 == deuceScore && scoreTeam2 == deuceScore && winScore < maxScore) {
-                winScore++;
-                deuceScore++;
-            }
+        match.gameInfo.gameOneInfo.gameDuration = "";
+        match.gameInfo.gameTwoInfo.gameDuration = "";
+        match.gameInfo.gameThreeInfo.gameDuration = "";
+    }
 
-            // Game won
-            if (scoreTeam1 == winScore) {
-                displayMatchScore(scoreTeam1, scoreTeam2, 1, game);
-                game++;
-                gameTeam1++;
-                scoreTeam1 = 0;
-                scoreTeam2 = 0;
-                winScore = 21;
-                deuceScore = 20;
-                if (game <= maxGame) {
-                    document.getElementById("currentGameNumberDisplay").innerHTML = "Game " + game;
-                }
-                switch (game) {
-                    case 2:
-                        document.getElementById("notificationTest").innerHTML ="Game 1 won by " + document.getElementById("team1NameInput").value;
-                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
-                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
-                        break;
-                    case 3:
-                        if (gameTeam1 == 1 && gameTeam2 == 1){
-                            document.getElementById("notificationTest").innerHTML ="Game 2 won by " + document.getElementById("team1NameInput").value;
-                            document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
-                            document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
-                        }else{
-                            document.getElementById("notificationTest").innerHTML ="Match won by " + document.getElementById("team1NameInput").value;
+    $("#team1AddScoreButton").click(function () {
+        scoreTeam1++;
 
-                            // Enable and disable appropriate buttons
-                            document.getElementById("team1AddScoreButton").disabled = true;
-                            document.getElementById("team2AddScoreButton").disabled = true;
-                        }
-                        break;
-                    case 4:
-                        document.getElementById("notificationTest").innerHTML ="Match won by " + document.getElementById("team1NameInput").value;
-
-                        // Enable and disable appropriate buttons
-                        document.getElementById("team1AddScoreButton").disabled = true;
-                        document.getElementById("team2AddScoreButton").disabled = true;
-                        break;
-                    default:
-                        alert("Something is wrong with team1AddScoreButton's GameWon function");
-                }
-            }
-        });
-
-        $("#team2AddScoreButton").click(function() {
-            scoreTeam2++;
-
-            // Enable and disable appropriate buttons
-            if (game == 1 && scoreTeam2 == 1) {
-                document.getElementById("undoButton").disabled = false;
-            }
-
-            // Add score
-            if (scoreTeam2 <= winScore) {
-                switch (game) {
-                    case 1:
-                        scoreTeam1Array_gameOne.push(scoreTeam1.toString());
-                        scoreTeam2Array_gameOne.push(scoreTeam2.toString());
-                        break;
-                    case 2:
-                        scoreTeam1Array_gameTwo.push(scoreTeam1.toString());
-                        scoreTeam2Array_gameTwo.push(scoreTeam2.toString());
-                        break;
-                    case 3:
-                        scoreTeam1Array_gameThree.push(scoreTeam1.toString());
-                        scoreTeam2Array_gameThree.push(scoreTeam2.toString());
-                        break;
-                    default:
-                        alert("Something is wrong with team2AddScoreButton's AddScore function");
-                }
-                document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
-            }
-
-            // Deuce happen
-            if (scoreTeam1 == deuceScore && scoreTeam2 == deuceScore && winScore < maxScore) {
-                winScore++;
-                deuceScore++;
-            }
-
-            // Game won
-            if (scoreTeam2 == winScore) {
-                displayMatchScore(scoreTeam2, scoreTeam1, 2, game);
-                game++;
-                gameTeam2++;
-                scoreTeam1 = 0;
-                scoreTeam2 = 0;
-                winScore = 21;
-                deuceScore = 20;
-                if (game <= maxGame) {
-                    document.getElementById("currentGameNumberDisplay").innerHTML = "Game " + game;
-                }
-                switch (game) {
-                    case 2:
-                        document.getElementById("notificationTest").innerHTML ="Game 1 won by " + document.getElementById("team2NameInput").value;
-                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
-                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
-                        break;
-                    case 3:
-                        if (gameTeam1 == 1 && gameTeam2 == 1){
-                            document.getElementById("notificationTest").innerHTML ="Game 2 won by " + document.getElementById("team2NameInput").value;
-                            document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
-                            document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
-                        } else {
-                            document.getElementById("notificationTest").innerHTML ="Match won by " + document.getElementById("team2NameInput").value;
-
-                            // Enable and disable appropriate buttons
-                            document.getElementById("team1AddScoreButton").disabled = true;
-                            document.getElementById("team2AddScoreButton").disabled = true;
-                        }
-                        break;
-                    case 4:
-                        document.getElementById("notificationTest").innerHTML ="Match won by " + document.getElementById("team2NameInput").value;
-
-                        // Enable and disable appropriate buttons
-                        document.getElementById("team1AddScoreButton").disabled = true;
-                        document.getElementById("team2AddScoreButton").disabled = true;
-                        break;
-                    default:
-                        alert("Something is wrong with team2AddScoreButton's GameWon function");
-                }
-            }
-        });
-
-        // Display Match Score
-        function displayMatchScore(winningTeamScore, losingTeamScore, winningTeam, winningGameNumber) {
-
-            // Check which game score to update
-            switch (winningGameNumber) {
-                case 1:
-                    var gameNumberScoreDisplay = "game1ScoreDisplay";
-                    break;
-                case 2:
-                    var gameNumberScoreDisplay = "game2ScoreDisplay";
-                    break;
-                case 3:
-                    var gameNumberScoreDisplay = "game3ScoreDisplay";
-                    break;
-            }
-
-            // Check if losing team score is double digit
-            switch (winningTeam) {
-                // Team 1 win
-                case 1:
-                    if (losingTeamScore < 10) {
-                        document.getElementById(gameNumberScoreDisplay).innerHTML = winningTeamScore + " - " + "&nbsp;" + losingTeamScore + "&nbsp;";
-                    } else {
-                        document.getElementById(gameNumberScoreDisplay).innerHTML = winningTeamScore + " - " + losingTeamScore;
-                    }
-                    break;
-
-                // Team 2 win
-                case 2:
-                    if (losingTeamScore < 10) {
-                        document.getElementById(gameNumberScoreDisplay).innerHTML = "&nbsp;" + losingTeamScore + "&nbsp;" + " - " + winningTeamScore;
-                    } else {
-                        document.getElementById(gameNumberScoreDisplay).innerHTML = losingTeamScore + " - " + winningTeamScore;
-                    }
-                    break;
-
-                default:
-                    alert("Something is wrong with displayMatchScore function");
-            }
+        // Enable and disable appropriate buttons
+        if (match.gameInfo.gameOneInfo.scoreInfo.team1Score == "0" && scoreTeam1 == 1) {
+            document.getElementById("undoButton").disabled = false;
         }
 
-        // When Undo button is clicked
-        $("#undoButton").click(function() {
-            switch (game){
-                case 1:
-                    if ((scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length-1]==1 && scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length-1]==0) || (scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length-1]==0 && scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length-1]==1)){
-                        scoreTeam1Array_gameOne.pop();
-                        scoreTeam2Array_gameOne.pop();
-                        scoreTeam1 = scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length - 1];
-                        scoreTeam2 = scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length - 1];
-                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
-                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
-                        document.getElementById("undoButton").disabled = true;
-                        break;
-                    }else{
-                        scoreTeam1Array_gameOne.pop();
-                        scoreTeam2Array_gameOne.pop();
-                        scoreTeam1 = scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length - 1];
-                        scoreTeam2 = scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length - 1];
-                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
-                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
-                        break;
-                    }
-                case 2:
-                    if (scoreTeam1Array_gameTwo[scoreTeam1Array_gameTwo.length-1]==0 && scoreTeam2Array_gameTwo[scoreTeam2Array_gameTwo.length-1]==0){
-                        game--;
-                        scoreTeam1Array_gameOne.pop();
-                        scoreTeam2Array_gameOne.pop();
-                        scoreTeam1 = scoreTeam1Array_gameOne[scoreTeam1Array_gameOne.length - 1];
-                        scoreTeam2 = scoreTeam2Array_gameOne[scoreTeam2Array_gameOne.length - 1];
+        // Deuce happen
+        if (scoreTeam1 == deuceScore && scoreTeam2 == deuceScore && winScore < maxScore) {
+            winScore++;
+            deuceScore++;
+        }
 
-                        scoreTeam1Array_gameTwo = ["0"];
-                        scoreTeam2Array_gameTwo = ["0"];
+        // Add score
+        if (scoreTeam1 <= winScore){
+            addScore("team1ScoreDisplay",scoreTeam1);
+        }
 
-                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
-                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
-                        break;
-                    }else {
-                        scoreTeam1Array_gameTwo.pop();
-                        scoreTeam2Array_gameTwo.pop();
-                        scoreTeam1 = scoreTeam1Array_gameTwo[scoreTeam1Array_gameTwo.length-1];
-                        scoreTeam2 = scoreTeam2Array_gameTwo[scoreTeam2Array_gameTwo.length-1];
+        // Game won
+        if (scoreTeam1 == winScore) {
+            displayMatchScore(scoreTeam1, scoreTeam2, 1, game);
+            addGame(match.team1Info);
+        }
+    });
 
-                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam1.toString();
-                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
-                        break;
-                    }
-                case 3:
-                    if (scoreTeam1Array_gameThree[scorTeam1Array_gameThree.length-1]==0 && scoreTeam2Array_gameThree[scoreTeam2Array_gameThree.length-1]==0){
-                        game--;
-                        scoreTeam1Array_gameTwo.pop();
-                        scoreTeam2Array_gameTwo.pop();
-                        scoreTeam1 = scoreTeam1Array_gameTwo[scoreTeam1Array_gameTwo.length - 1];
-                        scoreTeam2 = scoreTeam2Array_gameTwo[scoreTeam2Array_gameTwo.length - 1];
+    $("#team2AddScoreButton").click(function () {
+        scoreTeam2++;
 
-                        scoreTeam1Array_gameThree = ["0"];
-                        scoreTeam2Array_gameThree = ["0"];
+        // Enable and disable appropriate buttons
+        if (match.gameInfo.gameOneInfo.scoreInfo.team2Score == "0" && scoreTeam2 == 1) {
+            document.getElementById("undoButton").disabled = false;
+        }
 
-                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
-                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
-                        break;
-                    }else {
-                        scoreTeam1Array_gameThree.pop();
-                        scoreTeam2Array_gameThree.pop();
-                        scoreTeam1 = scoreTeam1Array_gameThree[scoreTeam1Array_gameThree.length-1];
-                        scoreTeam2 = scoreTeam2Array_gameThree[scoreTeam2Array_gameThree.length-1];
+        // Deuce happen
+        if (scoreTeam1 == deuceScore && scoreTeam2 == deuceScore && winScore < maxScore) {
+            winScore++;
+            deuceScore++;
+        }
 
-                        document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
-                        document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
-                        break;
-                    }
-                default:
-                    alert("Something is wrong with undoButton");
-            }
-        });
+        // Add score
+        if (scoreTeam2 <= winScore){
+            addScore("team2ScoreDisplay",scoreTeam2);
+        }
+
+        // Game won
+        if (scoreTeam2 == winScore) {
+            displayMatchScore(scoreTeam2, scoreTeam1, 2, game);
+            addGame(match.team2Info);
+        }
+    });
+
+    function addScore(scoreDisplay,scoreTeam) {
+        switch (game) {
+            case 1:
+                match.gameInfo.gameOneInfo.scoreInfo.team1Score.push(scoreTeam1.toString());
+                match.gameInfo.gameOneInfo.scoreInfo.team2Score.push(scoreTeam2.toString());
+                winScoreArray_gameOne.push(winScore.toString());
+                deuceScoreArray_gameOne.push(deuceScore.toString());
+                break;
+            case 2:
+                match.gameInfo.gameTwoInfo.scoreInfo.team1Score.push(scoreTeam1.toString());
+                match.gameInfo.gameTwoInfo.scoreInfo.team2Score.push(scoreTeam2.toString());
+                winScoreArray_gameTwo.push(winScore.toString());
+                deuceScoreArray_gameTwo.push(deuceScore.toString());
+                break;
+            case 3:
+                match.gameInfo.gameThreeInfo.scoreInfo.team1Score.push(scoreTeam1.toString());
+                match.gameInfo.gameThreeInfo.scoreInfo.team2Score.push(scoreTeam2.toString());
+                winScoreArray_gameThree.push(winScore.toString());
+                deuceScoreArray_gameThree.push(deuceScore.toString());
+                break;
+            default:
+                alert("Something is wrong with teamAddScoreButton's AddScore function");
+        }
+        document.getElementById(scoreDisplay).innerHTML = scoreTeam.toString();
     }
+
+    // Display Match Score
+    function displayMatchScore(winningTeamScore, losingTeamScore, winningTeam, winningGameNumber) {
+
+        // Check which game score to update
+        switch (winningGameNumber) {
+            case 1:
+                var gameNumberScoreDisplay = "game1ScoreDisplay";
+                document.getElementById("currentGameNumberDisplay").innerHTML = "Game 2";
+                break;
+            case 2:
+                var gameNumberScoreDisplay = "game2ScoreDisplay";
+                document.getElementById("currentGameNumberDisplay").innerHTML = "Game 3";
+                break;
+            case 3:
+                var gameNumberScoreDisplay = "game3ScoreDisplay";
+                break;
+        }
+
+        // Check if losing team score is double digit
+        switch (winningTeam) {
+                // Team 1 win
+            case 1:
+                if (losingTeamScore < 10) {
+                    document.getElementById(gameNumberScoreDisplay).innerHTML = winningTeamScore + " - " + "&nbsp;" + losingTeamScore + "&nbsp;";
+                } else {
+                    document.getElementById(gameNumberScoreDisplay).innerHTML = winningTeamScore + " - " + losingTeamScore;
+                }
+                break;
+
+                // Team 2 win
+            case 2:
+                if (losingTeamScore < 10) {
+                    document.getElementById(gameNumberScoreDisplay).innerHTML = "&nbsp;" + losingTeamScore + "&nbsp;" + " - " + winningTeamScore;
+                } else {
+                    document.getElementById(gameNumberScoreDisplay).innerHTML = losingTeamScore + " - " + winningTeamScore;
+                }
+                break;
+
+            default:
+                alert("Something is wrong with displayMatchScore function");
+        }
+        return true;
+    }
+
+    function addGame(winningTeam){
+        scoreTeam1 = 0;
+        scoreTeam2 = 0;
+        winScore = 21;
+        deuceScore = 20;
+
+        switch(game){
+            case 1:
+                match.gameInfo.gameOneInfo.winningTeam = winningTeam;
+                document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                break;
+            case 2:
+                match.gameInfo.gameTwoInfo.winningTeam = winningTeam;
+                if (match.gameInfo.gameOneInfo.winningTeam != match.gameInfo.gameTwoInfo.winningTeam){
+                    document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                    document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                }else{
+
+                    // Enable and disable appropriate buttons
+                    document.getElementById("team1AddScoreButton").disabled = true;
+                    document.getElementById("team2AddScoreButton").disabled = true;
+                    document.getElementById("buttonOne").disabled = true;
+                    document.getElementById("stopButton").disabled = true;
+
+                    // Change Pause button to Play button
+                    document.getElementById("buttonOneText").innerHTML = "&nbsp;Play";
+                    document.getElementById("buttonOneIcon").innerHTML = "play_arrow";
+
+                    // Get end time
+                    match.tournamentInfo.endDate = new Date();
+                    clearInterval(intervalCounter);
+                }
+                break;
+            case 3:
+                match.gameInfo.gameThreeInfo.winningTeam = winningTeam;
+
+                // Enable and disable appropriate buttons
+                document.getElementById("team1AddScoreButton").disabled = true;
+                document.getElementById("team2AddScoreButton").disabled = true;
+                document.getElementById("buttonOne").disabled = true;
+                document.getElementById("stopButton").disabled = true;
+
+                // Change Pause button to Play button
+                document.getElementById("buttonOneText").innerHTML = "&nbsp;Play";
+                document.getElementById("buttonOneIcon").innerHTML = "play_arrow";
+
+                // Get end time
+                match.tournamentInfo.endDate = new Date();
+                clearInterval(intervalCounter);
+                break;
+            default:
+                alert("Something is wrong with teamAddScoreButton's addGame function");
+        }
+        game++;
+    }
+
+    $("#undoButton").click(function() {
+        switch (game){
+            case 1:
+                if (match.gameInfo.gameOneInfo.scoreInfo.team1Score.length == 2 && match.gameInfo.gameOneInfo.scoreInfo.team2Score.length == 2){
+                    match.gameInfo.gameOneInfo.scoreInfo.team1Score.pop();
+                    match.gameInfo.gameOneInfo.scoreInfo.team2Score.pop();
+                    winScoreArray_gameOne.pop();
+                    deuceScoreArray_gameOne.pop();
+                    scoreTeam1 = match.gameInfo.gameOneInfo.scoreInfo.team1Score[match.gameInfo.gameOneInfo.scoreInfo.team1Score.length - 1];
+                    scoreTeam2 = match.gameInfo.gameOneInfo.scoreInfo.team2Score[match.gameInfo.gameOneInfo.scoreInfo.team1Score.length - 1];
+                    winScore = winScoreArray_gameOne[winScoreArray_gameOne.length - 1];
+                    deuceScore = deuceScoreArray_gameOne[deuceScoreArray_gameOne.length - 1];
+                    document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                    document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                    document.getElementById("undoButton").disabled = true;
+                    break;
+                }else{
+                    match.gameInfo.gameOneInfo.scoreInfo.team1Score.pop();
+                    match.gameInfo.gameOneInfo.scoreInfo.team2Score.pop();
+                    winScoreArray_gameOne.pop();
+                    deuceScoreArray_gameOne.pop();
+                    scoreTeam1 = match.gameInfo.gameOneInfo.scoreInfo.team1Score[match.gameInfo.gameOneInfo.scoreInfo.team1Score.length - 1];
+                    scoreTeam2 = match.gameInfo.gameOneInfo.scoreInfo.team2Score[match.gameInfo.gameOneInfo.scoreInfo.team2Score.length - 1];
+                    winScore = winScoreArray_gameOne[winScoreArray_gameOne.length - 1];
+                    deuceScore = deuceScoreArray_gameOne[deuceScoreArray_gameOne.length - 1];
+                    document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                    document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                    break;
+                }
+            case 2:
+                if (match.gameInfo.gameTwoInfo.scoreInfo.team1Score.length == 1 && match.gameInfo.gameTwoInfo.scoreInfo.team2Score.length == 1){
+                    game--;
+                    match.gameInfo.gameOneInfo.winningTeam = "";
+                    match.gameInfo.gameOneInfo.scoreInfo.team1Score.pop();
+                    match.gameInfo.gameOneInfo.scoreInfo.team2Score.pop();
+                    winScoreArray_gameOne.pop();
+                    deuceScoreArray_gameOne.pop();
+                    scoreTeam1 = match.gameInfo.gameOneInfo.scoreInfo.team1Score[match.gameInfo.gameOneInfo.scoreInfo.team1Score.length - 1];
+                    scoreTeam2 = match.gameInfo.gameOneInfo.scoreInfo.team2Score[match.gameInfo.gameOneInfo.scoreInfo.team2Score.length - 1];
+                    winScore = winScoreArray_gameOne[winScoreArray_gameOne.length - 1];
+                    deuceScore = deuceScoreArray_gameOne[deuceScoreArray_gameOne.length - 1];
+
+                    match.gameInfo.gameTwoInfo.scoreInfo.team1Score = ["0"];
+                    match.gameInfo.gameTwoInfo.scoreInfo.team2Score = ["0"];
+                    winScoreArray_gameTwo = ["21"];
+                    deuceScoreArray_gameTwo = ["20"];
+
+                    document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                    document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+
+                    document.getElementById("game1ScoreDisplay").innerHTML = "0&nbsp;&nbsp;-&nbsp;&nbsp;0";
+                    break;
+                }else {
+                    match.gameInfo.gameTwoInfo.scoreInfo.team1Score.pop();
+                    match.gameInfo.gameTwoInfo.scoreInfo.team2Score.pop();
+                    winScoreArray_gameTwo.pop();
+                    deuceScoreArray_gameTwo.pop();
+                    scoreTeam1 =  match.gameInfo.gameTwoInfo.scoreInfo.team1Score[ match.gameInfo.gameTwoInfo.scoreInfo.team1Score.length-1];
+                    scoreTeam2 =  match.gameInfo.gameTwoInfo.scoreInfo.team2Score[ match.gameInfo.gameTwoInfo.scoreInfo.team2Score.length-1];
+                    winScore = winScoreArray_gameTwo[winScoreArray_gameTwo.length - 1];
+                    deuceScore = deuceScoreArray_gameTwo[deuceScoreArray_gameTwo.length - 1];
+
+                    document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                    document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                    break;
+                }
+            case 3:
+                if (match.gameInfo.gameThreeInfo.scoreInfo.team1Score.length == 1 && match.gameInfo.gameThreeInfo.scoreInfo.team2Score.length == 1){
+                    game--;
+                    match.gameInfo.gameTwoInfo.scoreInfo.team1Score.pop();
+                    match.gameInfo.gameTwoInfo.scoreInfo.team2Score.pop();
+                    winScoreArray_gameTwo.pop();
+                    deuceScoreArray_gameTwo.pop();
+                    scoreTeam1 = match.gameInfo.gameTwoInfo.scoreInfo.team1Score[match.gameInfo.gameTwoInfo.scoreInfo.team1Score.length - 1];
+                    scoreTeam2 = match.gameInfo.gameTwoInfo.scoreInfo.team2Score[match.gameInfo.gameTwoInfo.scoreInfo.team2Score.length - 1];
+                    winScore = winScoreArray_gameTwo[winScoreArray_gameTwo.length - 1];
+                    deuceScore = deuceScoreArray_gameTwo[deuceScoreArray_gameTwo.length - 1];
+
+                    match.gameInfo.gameThreeInfo.scoreInfo.team1Score = ["0"];
+                    match.gameInfo.gameThreeInfo.scoreInfo.team2Score = ["0"];
+                    winScoreArray_gameThree = ["21"];
+                    deuceScoreArray_gameThree = ["20"];
+
+                    document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                    document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+
+                    document.getElementById("game2ScoreDisplay").innerHTML = "0&nbsp;&nbsp;-&nbsp;&nbsp;0";
+
+                    if (match.gameInfo.gameTwoInfo.winningTeam == match.gameInfo.gameOneInfo.winningTeam){
+                        // Start timer
+                        intervalCounter = setInterval(matchTimer, 1000);
+
+                        document.getElementById("team1AddScoreButton").disabled = false;
+                        document.getElementById("team2AddScoreButton").disabled = false;
+                        document.getElementById("buttonOne").disabled = false;
+                        document.getElementById("stopButton").disabled = false;
+
+                        // Change Play button to Pause button
+                        document.getElementById("buttonOneText").innerHTML = "&nbsp;Pause";
+                        document.getElementById("buttonOneIcon").innerHTML = "pause";
+
+                        // Clear match endDate
+                        match.tournamentInfo.endDate = "";
+                    }
+                    match.gameInfo.gameTwoInfo.winningTeam = "";
+                    break;
+                }else {
+                    match.gameInfo.gameThreeInfo.scoreInfo.team1Score.pop();
+                    match.gameInfo.gameThreeInfo.scoreInfo.team2Score.pop();
+                    winScoreArray_gameThree.pop();
+                    deuceScoreArray_gameThree.pop();
+                    scoreTeam1 = match.gameInfo.gameThreeInfo.scoreInfo.team1Score[match.gameInfo.gameThreeInfo.scoreInfo.team1Score.length-1];
+                    scoreTeam2 = match.gameInfo.gameThreeInfo.scoreInfo.team2Score[match.gameInfo.gameThreeInfo.scoreInfo.team2Score.length-1];
+                    winScore = winScoreArray_gameThree[winScoreArray_gameThree.length - 1];
+                    deuceScore = deuceScoreArray_gameThree[deuceScoreArray_gameThree.length - 1];
+
+                    document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                    document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+                    break;
+                }
+            case 4:
+                game--;
+                match.gameInfo.gameThreeInfo.scoreInfo.team1Score.pop();
+                match.gameInfo.gameThreeInfo.scoreInfo.team2Score.pop();
+                winScoreArray_gameThree.pop();
+                deuceScoreArray_gameThree.pop();
+                scoreTeam1 = match.gameInfo.gameThreeInfo.scoreInfo.team1Score[match.gameInfo.gameThreeInfo.scoreInfo.team1Score.length - 1];
+                scoreTeam2 = match.gameInfo.gameThreeInfo.scoreInfo.team2Score[match.gameInfo.gameThreeInfo.scoreInfo.team2Score.length - 1];
+                winScore = winScoreArray_gameThree[winScoreArray_gameThree.length - 1];
+                deuceScore = deuceScoreArray_gameThree[deuceScoreArray_gameThree.length - 1];
+
+                document.getElementById("team1ScoreDisplay").innerHTML = scoreTeam1.toString();
+                document.getElementById("team2ScoreDisplay").innerHTML = scoreTeam2.toString();
+
+                document.getElementById("game3ScoreDisplay").innerHTML = "0&nbsp;&nbsp;-&nbsp;&nbsp;0";
+
+                if (match.gameInfo.gameThreeInfo.winningTeam == match.gameInfo.gameTwoInfo.winningTeam){
+                    // Start timer
+                    intervalCounter = setInterval(matchTimer, 1000);
+
+                    document.getElementById("team1AddScoreButton").disabled = false;
+                    document.getElementById("team2AddScoreButton").disabled = false;
+                    document.getElementById("buttonOne").disabled = false;
+                    document.getElementById("stopButton").disabled = false;
+
+                    // Change Play button to Pause button
+                    document.getElementById("buttonOneText").innerHTML = "&nbsp;Pause";
+                    document.getElementById("buttonOneIcon").innerHTML = "pause";
+
+                    // Clear match endDate
+                    match.tournamentInfo.endDate = "";
+
+                }
+                match.gameInfo.gameThreeInfo.winningTeam = "";
+                break;
+            default:
+                alert("Something is wrong with undoButton");
+        }
+    });
 </script>
 </html>
